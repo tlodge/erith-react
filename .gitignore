@@ -1,0 +1,13 @@
+npm-debug.log
+screen/node_modules
+server/node_modules
+admin/node_modules
+server/npm-debug.log
+screen/npm-debug.log
+admin/npm-debug.log
+server/browser-bundle.js
+screen/browser-bundle.js
+admin/browser-bundle.js
+server/static/shared/uploads/*
+*~
+.DS_Store
