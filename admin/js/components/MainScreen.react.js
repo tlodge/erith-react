@@ -50,11 +50,11 @@ var MainScreen = React.createClass({
 
       var dimensions = [
         {x:0 ,y:0,h:height/2-padding, w:width/2},
-        {x:width/2+padding, y:0, h:height/3, w:width/2},
+        {x:width/2+padding, y:0, h:height/3, w:(width/2)},
         {x:0, y:height/2, h:height/2, w:width/2},
-        {x:width/2+viewfinderradius/2+padding, y:height/3+padding, h:height/3-padding, w:width/2-viewfinderradius/2},
+        {x:width/2 +padding, y:height/3+padding, h:height/3-padding, w:width/2},
         {x:width/2 +padding, y:(height/3)*2 + padding, h:height/3-padding, w:(width/2)/1.5 - padding},
-        {x:width/2 + (width/2)/1.5 + padding, y:(height/3)*2+padding, h:height/3-padding, w:(width/2)-(width/2)/1.5}
+        {x:width/2 + (width/2)/1.5 + padding, y:(height/3)*2+padding, h:height/3-padding, w: ((width/2)-(width/2)/1.5)}
       ];
 
   		var images = this.state.images.map(function(image, i){
@@ -80,14 +80,15 @@ var MainScreen = React.createClass({
 
           top: dimensions[i].y + dimensions[i].h - 25,
           left: dimensions[i].x,
+          width: dimensions[i].w,
           background: '#333333',
           opacity: 0.8,
-          width:  w,
           height:25,
           color: 'white',
           textAlign: 'center',
           lineHeight: "25px",
           zIndex: -99999,
+          overflowX: 'hidden'
         }
 
   			return <div>

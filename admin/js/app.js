@@ -1,9 +1,9 @@
 // This file bootstraps the entire application.
 
-var ErithApp = require('./components/ErithApp.react');
+var AdminApp = require('./components/AdminApp.react');
 var React = require('react');
 window.React = React; // export for http://fb.me/react-devtools
 
 React.render(
-    <ErithApp />, document.getElementById('erith')
+    <AdminApp />, document.getElementById('erith')
 );
