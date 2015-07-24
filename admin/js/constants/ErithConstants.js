@@ -12,9 +12,9 @@ module.exports = {
 	ActionTypes: keyMirror({
 		CLICK_PRESSED: null,
 		CHANGE_SCREEN: null,
-		IMAGE_READY_TO_BE_SAVED: null,
+		NEW_MESSAGE: null,
 		IMAGE_LIST:null,
-		IMAGE_SAVED_TO_SERVER:null,
+		IMAGE_SAVED_TO_SERVER: null,
   	}),
 
   	PayloadSources: keyMirror({

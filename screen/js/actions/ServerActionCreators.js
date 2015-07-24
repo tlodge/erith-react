@@ -12,10 +12,19 @@ module.exports = {
         });
     },
 
+    receivedMessage: function(message){
+        AppDispatcher.handleServerAction({
+          type: ActionTypes.RAW_MESSAGE,
+          message: message
+        });
+    },
+
     savedImageToServer: function(url){
       AppDispatcher.handleServerAction({
           type: ActionTypes.IMAGE_SAVED_TO_SERVER,
           url: url
       });
     }
+
+
 }

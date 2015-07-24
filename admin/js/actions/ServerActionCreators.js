@@ -12,6 +12,10 @@ module.exports = {
         });
     },
 
+    savedMessageToServer: function(message){
+        console.log(message);
+    },
+
     savedImageToServer: function(url){
       AppDispatcher.handleServerAction({
           type: ActionTypes.IMAGE_SAVED_TO_SERVER,

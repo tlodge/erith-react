@@ -31,22 +31,8 @@ var MainScreen = React.createClass({
   		var htow = 640/480;
   		var wtoh = 480/640;
   		var padding = 5;
-
-      var viewfinderradius = this.props.height/3;
   		var width = this.props.width;// / 3 - padding;
   		var height = this.props.height;// / 3 - padding;
-
-  		//find out which is bigger, the scaled width or the scaled height
-  		var sheight  = width * wtoh;
-  		var swidth   = height * htow;
-
-  		dim = {};
-  		//if (sheight > swidth){
-  			dim = {w:width, h:sheight}
-  		//}
-  		//else{
-  		//	dim = {w:swidth, h:height}
-  		//}
 
       var dimensions = [
         {x:0 ,y:0,h:height/2-padding, w:width/2},

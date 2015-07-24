@@ -73,11 +73,7 @@ var ImageStore = assign({}, EventEmitter.prototype, {
 ImageStore.dispatchToken = AppDispatcher.register(function(action) {
 
   switch(action.action.type) {
-  	case ActionTypes.IMAGE_READY_TO_BE_SAVED:
-			//_saveImage(action.action.imageData);
-      ImageStore.emitChange();
-      break;
-
+  	
     case ActionTypes.IMAGE_LIST:
       _setImageList(action.action.list);
       ImageStore.emitChange();

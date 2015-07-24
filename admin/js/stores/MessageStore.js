@@ -14,7 +14,7 @@ var assign = require('object-assign');
 
 var CHANGE_EVENT = 'change';
 
-var _message="This is a nice long test message that will be shown on the main page and which will work well with other stuff like twitter and facebook and email and the such";
+var _message="";
 var ActionTypes = ErithConstants.ActionTypes;
 
 function _updateMessage(message){
@@ -51,7 +51,7 @@ AppDispatcher.register(function(action) {
 
   switch(action.action.type) {
 
-		case ActionTypes.NEW_RAW_MESSAGE:
+		case ActionTypes.NEW_MESSAGE:
 			  _updateMessage(action.action.message);
 				MessageStore.emitChange();
 				break;

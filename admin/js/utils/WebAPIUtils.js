@@ -18,11 +18,11 @@ module.exports = {
 		    });
 	},
 
-	sendImageToServer: function(image){
+	sendMessage: function(message){
 
 		request
-     		.post('/erith/image')
-     		.send(JSON.stringify({image: image}))
+     		.post('/erith/message')
+     		.send(JSON.stringify({message: message}))
      		.set('Accept', 'application/json')
      		.type('json')
      		.end(function(err, res){
@@ -30,8 +30,10 @@ module.exports = {
 		         console.log(err);
 		       }else{
 		         console.log(res.body);
-		         ServerActionCreators.savedImageToServer(res.body.url);
+		         ServerActionCreators.savedMessageToServer(res.body);
 		        }
 		    });
 	}
+
+
 }

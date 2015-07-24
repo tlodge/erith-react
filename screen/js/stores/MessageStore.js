@@ -51,7 +51,7 @@ AppDispatcher.register(function(action) {
 
   switch(action.action.type) {
 
-		case ActionTypes.NEW_RAW_MESSAGE:
+		case ActionTypes.RAW_MESSAGE:
 			  _updateMessage(action.action.message);
 				MessageStore.emitChange();
 				break;

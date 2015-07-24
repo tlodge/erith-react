@@ -1,8 +1,10 @@
 var React = require('react/addons');
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
-var ImageActionCreators = require('../actions/ImageActionCreators');
+var MessageActionCreators = require('../actions/MessageActionCreators');
+
 var injectTapEventPlugin = require("react-tap-event-plugin");
 var MessageStore = require('../stores/MessageStore');
+var ENTER_KEY_CODE = 13;
 
 injectTapEventPlugin();
 
@@ -28,25 +30,65 @@ var MessageScreen = React.createClass({
 
   render: function() {
     	return <div>
-                
-                  <div className="takepicbackground"></div>
-                  <div onTouchTap={this._handleTouch} className="messagebox">
-                      <div className="messagetext">
-                        {this.state.message}
-                      </div>
+                  <div class="row">
+                    <div class="large-12 columns">
+                      <h1> {this.state.message} </h1>
+                    </div>
                   </div>
-                
+                  <div class="row">
+                     <div class="large-12 columns">
+                      <MessageComposer newMessage={this._newMessage} />
+                     </div>
+                  </div>
              </div>
   },
 
-  _handleTouch: function(e){
-    e.stopPropagation();
-    e.preventDefault();
-    ImageActionCreators.cancel();
+  _newMessage: function(message){
+    MessageActionCreators.newMessage(message);
   },
 
   _onChange: function(event){
       this.setState(getStateFromStores());
+  }
+
+});
+
+var MessageComposer = React.createClass({
+
+  getInitialState: function() {
+    return {text: ''};
+  },
+
+  render: function() {
+    var myStyle = {
+      height: 300,
+    }
+
+    return (
+        <textarea
+          className="message-composer"
+          style={myStyle}
+          name="message"
+          value={this.state.text}
+          placeholder="type your response"
+          onChange={this._onChange}
+          onKeyDown={this._onKeyDown}/>
+    );
+  },
+
+  _onChange: function(event, value) {
+    this.setState({text: event.target.value});
+  },
+
+  _onKeyDown: function(event) {
+    if (event.keyCode === ENTER_KEY_CODE) {
+      event.preventDefault();
+      var text = this.state.text.trim();
+      if (text) {
+        this.props.newMessage(text);
+      }
+      this.setState({text: ''});
+    }
   }
 
 });

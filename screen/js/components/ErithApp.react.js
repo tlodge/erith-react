@@ -32,6 +32,7 @@ var ErithApp = React.createClass({
 
 	componentDidMount: function(){
 	 	ScreenStore.addChangeListener(this._onChange);
+	 	MessageStore.addChangeListener(this._onChange);
 	 	ImageActionCreators.setUpVideo();
 		d3viewfinder.create({vh:480, vw:480, oh:640, ow:$(window).width(), radius:200});
 		d3viewfinder.updatemessage(this.state.message);
@@ -39,6 +40,7 @@ var ErithApp = React.createClass({
 
 	componentWillUnmount: function(){
 		ScreenStore.removeChangeListener(this._onChange);
+		MessageStore.removeChangeListener(this._onChange);
 	},
 
   	render: function() {
@@ -103,6 +105,7 @@ var ErithApp = React.createClass({
 				height:480,
 				left: -(640-480)/2,
 			}
+			
 			
 			d3viewfinder.updatemessage(this.state.message);
 

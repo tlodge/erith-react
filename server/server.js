@@ -21,10 +21,9 @@ app.set('view engine', 'html');
 
 app.engine('html', hbs.__express);
 var server = http.createServer(app);
+var live = require("./live")(server);
 
 var DIRECTORY = path.join("static","shared","uploads");
-
-
 
 app.get('/images/', function(req,res){
   	fs.readdirAsync(DIRECTORY).then(function(list){
@@ -49,6 +48,14 @@ app.post('/image/', function(req, res){
 	},function(err){
 		res.send({success:false});
 	});	
+});
+
+//this needs to be locked down..
+app.post('/message/', function(req, res){
+	var message = req.body.message;
+	res.send({success:true});
+	console.log("seen a new message so posting something live!!");
+	live.sendmessage(message);
 });
 
 server.listen(8081);

@@ -187,6 +187,8 @@ var ViewFinder = {
   },
 
   updatemessage: function(m){
+    console.log("Ok updating message here...");
+    console.log(m);
     d3.select(".textpath").text(m.substring(0,60));
   },
 

@@ -130,3 +130,41 @@ text{
 .visible{
   display: initial;
 }
+
+.navigation{
+  width: 100%;
+  position: absolute;
+  bottom: 0px;
+  height: 50px;
+  background: #333333;
+  text-align: center;
+}
+
+ul.navbar{
+  font-size: 16px;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    list-style: outside none none;
+    background: none repeat scroll 0 0 #333333;
+}
+
+ul.navbar li{
+  line-height: 50px;
+  display: inline;
+  padding-left: 20px;
+}
+
+ul.navbar li a.active{
+  background: #f44336;
+}
+
+ul.navbar li a{
+    color: #ffffff;
+    font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+    font-weight: normal;
+    padding: 12px 0.9375rem 12px 0.9375rem;
+    text-transform: none;
+    text-decoration: none;
+    width: 100%;
+}
