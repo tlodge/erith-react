@@ -24,15 +24,35 @@ var server = http.createServer(app);
 var live = require("./live")(server);
 
 var DIRECTORY = path.join("static","shared","uploads");
+var TRASHDIRECTORY = path.join("static","shared","trash");
 
-app.get('/images/', function(req,res){
-  	fs.readdirAsync(DIRECTORY).then(function(list){
+var _getImageList = function(){
+	return fs.readdirAsync(DIRECTORY).then(function(list){
   		list.sort();
   		var images = list.map(function(filename){
   			return "/erith/shared/uploads/"+filename;
   		})
-  		res.send(images);
+  		return images.slice(0,Math.min(6,images.length));
   	});
+}
+
+var _deleteImage = function(image){
+
+	var fileToRename = path.join(DIRECTORY, image);
+	var newPath = path.join(TRASHDIRECTORY, image);
+	
+	return fs.renameAsync(fileToRename, newPath).then(function(){
+		return {success:true};
+	},function(err){
+		throw err;
+	});
+	
+}
+
+app.get('/images/', function(req,res){
+	_getImageList().then(function(images){
+		res.send(images);
+	});
 });
 
 app.post('/image/', function(req, res){
@@ -56,6 +76,21 @@ app.post('/message/', function(req, res){
 	res.send({success:true});
 	console.log("seen a new message so posting something live!!");
 	live.sendmessage(message);
+});
+
+//this needs to be locked down..
+app.post('/delete/', function(req, res){
+	var components 	= req.body.image.split("/")
+	var image = components[components.length-1];
+	
+	_deleteImage(image)
+	
+	.then(_getImageList)
+
+	.then(function(images){
+	 	res.send(images);
+	 	live.sendimages(images);
+	})
 });
 
 server.listen(8081);

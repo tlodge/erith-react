@@ -13,6 +13,9 @@ module.exports = function(server){
   return{
     sendmessage: function(message){
       io.emit("message", message);
+    },
+    sendimages: function(images){
+      io.emit("images", images);
     }
   }
 }
