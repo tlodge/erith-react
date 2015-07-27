@@ -1,7 +1,9 @@
 var React = require('react');
-var Image = require('./Image.react')
 var ImageStore = require('../stores/ImageStore');
+var ImageActionCreators = require('../actions/ImageActionCreators');
 var WebAPIUtils = require('../utils/WebAPIUtils');
+var injectTapEventPlugin = require("react-tap-event-plugin");
+injectTapEventPlugin();
 
 function getStateFromStores(){
   return {
@@ -61,25 +63,21 @@ var MainScreen = React.createClass({
           zIndex: -99999,
         }
 
-        var tagBoxStyle ={
+        var deleteImageStyle ={
           position: 'absolute',
-
-          top: dimensions[i].y + dimensions[i].h - 25,
-          left: dimensions[i].x,
-          width: dimensions[i].w,
-          background: '#333333',
-          opacity: 0.8,
-          height:25,
-          color: 'white',
-          textAlign: 'center',
-          lineHeight: "25px",
-          zIndex: -99999,
-          overflowX: 'hidden'
+          top: dimensions[i].y + 15,
+          left: dimensions[i].x + dimensions[i].w - 45,
         }
 
   			return <div>
                 <Image source={image} imageStyle={imageStyle} />
-                <div style={tagBoxStyle}><strong>12 March 2.30pm</strong></div>
+                <TagBox x={dimensions[i].x}
+                        y={dimensions[i].y} 
+                        width={dimensions[i].w} 
+                        height={dimensions[i].h} />
+                <Delete source={image} x={dimensions[i].x}
+                        y={dimensions[i].y} 
+                        width={dimensions[i].w} />
               </div>
   		});
 
@@ -91,5 +89,56 @@ var MainScreen = React.createClass({
   }
 
 });
+
+var TagBox = React.createClass({
+
+    render: function(){
+
+      var tagBoxStyle ={
+          position: 'absolute',
+          top: this.props.y+ this.props.height - 25,
+          left: this.props.x,
+          width: this.props.width,
+          background: '#333333',
+          opacity: 0.8,
+          height:25,
+          color: 'white',
+          textAlign: 'center',
+          lineHeight: "25px",
+          zIndex: -99999,
+          overflowX: 'hidden'
+      }
+
+      return <div style={tagBoxStyle}><strong>12 March 2.30pm</strong></div>
+    }
+});
+
+var Image = React.createClass({
+    render: function() {
+      return  <img src={this.props.source} style={this.props.imageStyle}></img>
+    },
+
+    
+});
+
+var Delete = React.createClass({
+    render: function(){
+      
+      var deleteImageStyle ={
+          position: 'absolute',
+          top: this.props.y + 15,
+          left: this.props.x + this.props.width - 45,
+      }
+
+      return <div onTouchTap={this._deleteImage}  className="deleteImage" style={deleteImageStyle}>x</div>
+    },
+
+    _deleteImage: function(){
+      console.log("would delete");
+      console.log(this.props.source);
+      ImageActionCreators.deleteImage(this.props.source);
+    }
+});
+
 
 module.exports = MainScreen;

@@ -15,6 +15,7 @@ module.exports = {
 		NEW_MESSAGE: null,
 		IMAGE_LIST:null,
 		IMAGE_SAVED_TO_SERVER: null,
+		IMAGE_DELETED: null,
   	}),
 
   	PayloadSources: keyMirror({

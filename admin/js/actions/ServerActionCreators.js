@@ -21,5 +21,14 @@ module.exports = {
           type: ActionTypes.IMAGE_SAVED_TO_SERVER,
           url: url
       });
+    },
+
+    deletedImage: function(image){
+      console.log("deleted");
+      console.log(image);
+      AppDispatcher.handleServerAction({
+          type: ActionTypes.IMAGE_DELETED,
+          image: image
+      });
     }
 }
