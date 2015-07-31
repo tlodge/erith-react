@@ -178,3 +178,20 @@ ul.navbar li a{
   color: white;
   text-align: center;
 }
+
+.messageboxtitle{
+	height: 56px;
+	font-size: 120%;
+	line-height: 56px;
+	padding-left: 8px;
+	float: left;
+}
+
+.messageboxdate{
+	height: 56px;
+	font-size: 100%;
+	line-height: 56px;
+	padding-right: 10px;
+	float:right;
+}
+
