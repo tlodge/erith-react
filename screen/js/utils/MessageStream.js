@@ -6,7 +6,7 @@ module.exports = {
     
     init: function(){
       
-      var socket = io.connect('http://localhost', {path: '/erith/socket.io'});
+      var socket = io.connect();//'http://localhost', {path: '/erith/socket.io'});
 	  
 	  socket.on('message', function (data) {
 	    console.log(data);

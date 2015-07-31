@@ -1,9 +1,11 @@
 // This file bootstraps the entire application.
-
+var React = require('react');
 var PhotoScreen = require('./components/PhotoScreen.react');
 var MessageScreen = require('./components/MessageScreen.react');
+var MessageStream = require('./utils/MessageStream');
+MessageStream.init();
 
-var React = require('react');
+
 window.React = React; // export for http://fb.me/react-devtools
 var Router = require('react-router');
 var DefaultRoute = Router.DefaultRoute;

@@ -6,7 +6,7 @@ module.exports = {
 	getImages: function(image){
 
 		request
-     		.get('/erith/images')
+     		.get('/images')
      		.set('Accept', 'application/json')
      		.end(function(err, res){
 		       if (err){
@@ -21,7 +21,7 @@ module.exports = {
 	sendImageToServer: function(image){
 
 		request
-     		.post('/erith/image')
+     		.post('/image')
      		.send(JSON.stringify({image: image}))
      		.set('Accept', 'application/json')
      		.type('json')

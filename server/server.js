@@ -28,9 +28,16 @@ var TRASHDIRECTORY = path.join("static","shared","trash");
 
 var _getImageList = function(){
 	return fs.readdirAsync(DIRECTORY).then(function(list){
-  		list.sort();
+  		list.sort(function(a,b){
+  			if (a < b){
+  				return 1;
+  			}else if (a>b){
+  				return -1;
+  			}
+  			return 0;
+  		});
   		var images = list.map(function(filename){
-  			return "/erith/shared/uploads/"+filename;
+  			return "/shared/uploads/"+filename;
   		})
   		return images.slice(0,Math.min(6,images.length));
   	});
@@ -49,6 +56,10 @@ var _deleteImage = function(image){
 	
 }
 
+app.get('/', function(req,res){
+	console.log("nice am here!");
+	res.send({success:true});
+});
 app.get('/images/', function(req,res){
 	_getImageList().then(function(images){
 		res.send(images);
@@ -64,9 +75,13 @@ app.post('/image/', function(req, res){
 	var filename  = path.join(DIRECTORY, ts + ".jpg");
 	
 	fs.writeFileAsync(filename, buf).then(function(){
-		res.send({success:true, url:"/erith/shared/uploads/"+ts+".jpg"});
+		res.send({success:true, url:"/shared/uploads/"+ts+".jpg"});
 	},function(err){
 		res.send({success:false});
+	}).then(_getImageList).then(function(images){
+		console.log("am here --- will send out images!!");
+		console.log(images);
+		live.sendimages(images);
 	});	
 });
 
@@ -93,4 +108,4 @@ app.post('/delete/', function(req, res){
 	})
 });
 
-server.listen(8081);
+server.listen(8080);

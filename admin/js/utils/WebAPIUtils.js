@@ -6,7 +6,7 @@ module.exports = {
 	getImages: function(image){
 
 		request
-     		.get('/erith/images')
+     		.get('/images')
      		.set('Accept', 'application/json')
      		.end(function(err, res){
 		       if (err){
@@ -21,7 +21,7 @@ module.exports = {
 	sendMessage: function(message){
 
 		request
-     		.post('/erith/message')
+     		.post('/message')
      		.send(JSON.stringify({message: message}))
      		.set('Accept', 'application/json')
      		.type('json')
@@ -37,7 +37,7 @@ module.exports = {
 
 	deleteImage: function(image){
 		request
-     		.post('/erith/delete')
+     		.post('/delete')
      		.send(JSON.stringify({image: image}))
      		.set('Accept', 'application/json')
      		.type('json')
