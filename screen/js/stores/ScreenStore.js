@@ -68,17 +68,11 @@ AppDispatcher.register(function(action) {
 
 		case ActionTypes.CHANGE_SCREEN:
       
-       if (action.action.screen == "messages" && _currentscreen != "home")
+       if (action.action.screen === "messages" && _currentscreen !== "home")
           return;
       _changeScreen(action.action.screen);
        ScreenStore.emitChange();
       break;
-
-		case ActionTypes.IMAGE_READY_TO_BE_SAVED:
-			AppDispatcher.waitFor([ImageStore.dispatchToken]);
-				_changeScreen("home");
-				ScreenStore.emitChange();
-				break;
 
     default:
       // no op

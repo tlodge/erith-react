@@ -1,4 +1,4 @@
-var ImageActionCreators = require('../actions/ImageActionCreators')
+var ImageActionCreators = require('../actions/ImageActionCreators');
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var ErithConstants = require('../constants/ErithConstants');
 
@@ -60,8 +60,8 @@ var ViewFinder = {
           .style("stroke-width", 2)
           .style("fill-opacity", "0");
 
-    var clicker = svg.append("g").attr("class","toplayer")
-    var tags = svg.append('g').attr("class", "tags")
+    var clicker = svg.append("g").attr("class","toplayer");
+    var tags = svg.append('g').attr("class", "tags");
     
 
     clicker.append("circle")
@@ -143,11 +143,12 @@ var ViewFinder = {
    
     this.message(clicker,radius,cX, cY);
     this.tags();
+    setInterval(this.auto, 10000);
     
   },
 
-
-
+  
+  
   showmessagescreen: function(){
       console.log("in message clicked!!!!");
       ImageActionCreators.messageClicked();
@@ -155,9 +156,6 @@ var ViewFinder = {
 
   message: function(node,radius,cx,cy){
       
-      console.log("show message is ");
-      console.log(this.showmessage)
-
       var arc = d3.svg.arc().innerRadius(radius+7).outerRadius(radius+50).startAngle(Math.PI/2).endAngle(-Math.PI/2);
       
       var path = node.append("path")
@@ -187,8 +185,6 @@ var ViewFinder = {
   },
 
   updatemessage: function(m){
-    console.log("Ok updating message here...");
-    console.log(m);
     d3.select(".textpath").text(m.substring(0,60));
   },
 
@@ -234,13 +230,13 @@ var ViewFinder = {
   	d3.selectAll("circle.tag")
 		.transition()
 		.duration(1000)
-		.attr("r",radius/4)
+		.attr("r",radius/4);
 
 
 	d3.selectAll("text.tag")
 		.transition()
 		.duration(1000)
-		.style("opacity", 1)
+		.style("opacity", 1);
   },
 
   hidetags: function(){
@@ -248,12 +244,12 @@ var ViewFinder = {
     d3.selectAll("circle.tag")
 		  .transition()
 		  .duration(1000)
-		  .attr("r",0)
+		  .attr("r",0);
 
 	 d3.selectAll("text.tag")
 		  .transition()
 		  .duration(1000)
-		  .style("opacity", 0)
+		  .style("opacity", 0);
 
   },
 
@@ -270,28 +266,28 @@ var ViewFinder = {
 
 	var tagger = d3.select("g.tags");
 
-	var tags = tagger.selectAll("g.tag").data(tagdata, function(d){return d.text});
+	var tags = tagger.selectAll("g.tag").data(tagdata, function(d){return d.text;});
 
 	var tag = tags.enter()
 				  .append("g")
-			 	  .attr("class", "tag")
+			 	  .attr("class", "tag");
 
 
 	tag.append("circle")
-		 .attr("class", function(d,i){return "tag tag-" + i})
+		 .attr("class", function(d,i){return "tag tag-" + i;})
 		 .attr("r", 0)
 		 .attr("cx", function(d,i){
 
 				var offset = i < 4 ? 135 * Math.PI/180 : (135 + 180) * Math.PI/180;
 				i = i % 4;
-				return cX + (radius*1.5 * Math.cos(offset + (i* wedge)))
+				return cX + (radius*1.5 * Math.cos(offset + (i* wedge)));
 
 			})
 			.attr("cy", function(d,i){
 
 					var offset = i < 4 ? 135 * Math.PI/180 : (135 + 180) * Math.PI/180;
 					i = i % 4;
-					return cY + (radius*1.5 * Math.sin(offset + (i* wedge)))
+					return cY + (radius*1.5 * Math.sin(offset + (i* wedge)));
 		  })
 		 .style("fill", "white")
 		 .style("stroke", "black")
@@ -310,26 +306,26 @@ var ViewFinder = {
      });
 
 	tag.append("text")
-		 .attr("class", function(d,i) { return "tag tag-"+ i})
+		 .attr("class", function(d,i) { return "tag tag-"+ i;})
 		 .attr("x", function(d,i){
 
 				var offset = i < 4 ? 135 * Math.PI/180 : (135 + 180) * Math.PI/180;
 				i = i % 4;
-				return cX + (radius*1.5 * Math.cos(offset + (i* wedge)))
+				return cX + (radius*1.5 * Math.cos(offset + (i* wedge)));
 
 		})
 		.attr("y", function(d,i){
 
 				var offset = i < 4 ? 135 * Math.PI/180 : (135 + 180) * Math.PI/180;
 				i = i % 4;
-				return cY + (radius*1.5 * Math.sin(offset + (i* wedge)))
+				return cY + (radius*1.5 * Math.sin(offset + (i* wedge)));
 		})
 		 .attr("dy", ".35em")
 		 .attr("text-anchor", "middle")
 		 .style("font-size", (radius/4 * 0.4) + "px")
 		 .style("fill", "black")
 		 .style("opacity", 0)
-		 .text(function(d){return d.text})
+		 .text(function(d){return d.text;})
      .on("click", function(d, i){
          
         if (!d.selected){
@@ -349,6 +345,10 @@ var ViewFinder = {
     self.hidemessage();
     ImageActionCreators.countDown();
     self.countdown();
+  },
+
+  auto: function(){
+    self.startpicturetaking();
   },
 
   transition: function(callback){
@@ -389,7 +389,7 @@ var ViewFinder = {
       return function(t) {
       	 var offset = 0.25;
    		   return origin+ (r * Math.cos (2*Math.PI * (offset+t)));
-      }
+      };
   },
 
   handleYTween: function(d, i, a) {

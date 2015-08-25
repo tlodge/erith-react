@@ -25,6 +25,7 @@ function _saveImage(image){
 
 function _setImageList(images){
   _images = images;
+  imageCount = images.length;
 }
 
 function _addImage(url){
@@ -33,7 +34,7 @@ function _addImage(url){
 var ImageStore = assign({}, EventEmitter.prototype, {
 
   getAll: function(){
-    return _images;
+    return _images.slice(0,MAX_IMAGES);
   },
 
   /*getAll: function(){
@@ -73,11 +74,7 @@ var ImageStore = assign({}, EventEmitter.prototype, {
 ImageStore.dispatchToken = AppDispatcher.register(function(action) {
 
   switch(action.action.type) {
-  	case ActionTypes.IMAGE_READY_TO_BE_SAVED:
-			//_saveImage(action.action.imageData);
-      ImageStore.emitChange();
-      break;
-
+  	
     case ActionTypes.IMAGE_LIST:
       _setImageList(action.action.list);
       ImageStore.emitChange();

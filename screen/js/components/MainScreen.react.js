@@ -1,12 +1,12 @@
 var React = require('react');
-var Image = require('./Image.react')
+var Image = require('./Image.react');
 var ImageStore = require('../stores/ImageStore');
 var WebAPIUtils = require('../utils/WebAPIUtils');
 
 function getStateFromStores(){
   return {
       images: ImageStore.getAll()
-  }
+  };
 }
 
 var MainScreen = React.createClass({
@@ -42,7 +42,7 @@ var MainScreen = React.createClass({
 
   		dim = {};
   		//if (sheight > swidth){
-  			dim = {w:width, h:sheight}
+  			dim = {w:width, h:sheight};
   		//}
   		//else{
   		//	dim = {w:swidth, h:height}
@@ -73,7 +73,7 @@ var MainScreen = React.createClass({
           height: h,
           clip: "rect(" + hdelta + "px, " + dimensions[i].w + "px," + (dimensions[i].h+hdelta) + "px, 0px)",
           zIndex: -99999,
-        }
+        };
 
         var tagBoxStyle ={
           position: 'absolute',
@@ -88,15 +88,15 @@ var MainScreen = React.createClass({
           textAlign: 'center',
           lineHeight: "25px",
           zIndex: -99999,
-        }
+        };
 
   			return <div>
                 <Image source={image} imageStyle={imageStyle} />
                 <div style={tagBoxStyle}><strong>12 March 2.30pm</strong></div>
-              </div>
+              </div>;
   		});
 
-  		return <div>{images}</div>
+  		return <div>{images}</div>;
   },
 
   _onChange: function(event){

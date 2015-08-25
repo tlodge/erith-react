@@ -18,7 +18,7 @@ var TakePictureScreen = React.createClass({
                   <div className="takepicsmile"></div>
                   <div className="takepicbackground"></div>
                 </ReactCSSTransitionGroup>
-             </div>
+             </div>;
   }
 
 });

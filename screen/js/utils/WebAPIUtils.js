@@ -12,7 +12,6 @@ module.exports = {
 		       if (err){
 		         console.log(err);
 		       }else{
-		         	console.log(res.body);
 		         	ServerActionCreators.receivedImageList(res.body);
 		        }
 		    });
@@ -29,9 +28,8 @@ module.exports = {
 		       if (err){
 		         console.log(err);
 		       }else{
-		         console.log(res.body);
 		         ServerActionCreators.savedImageToServer(res.body.url);
 		        }
 		    });
 	}
-}
+};

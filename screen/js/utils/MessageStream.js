@@ -15,12 +15,10 @@ module.exports = {
 	  });
 
 	  socket.on('images', function (data) {
-	  	console.log("got new image list!!");
-	  	console.log(data);
 	    ServerActionCreators.receivedImageList(data);
 	    //socket.emit('my other event', { my: 'data' });
 	  });
 
     },
 
-}
+};

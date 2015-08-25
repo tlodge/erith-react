@@ -53,13 +53,10 @@ module.exports = {
 			var context = canvas.getContext("2d");
 
 			context.drawImage(video, 0, 0, 640, 480);
-      //need to compress it somehow here!
+     
 	 		dataURL = canvas.toDataURL("image/jpeg", 0.5);
     
-      console.log("the size in (Kb) of image is now");
-      console.log(dataURL.length/1024);
-
-			if (dataURL == null) {
+			if (dataURL === null) {
 				alert("We couldn't compress the image small enough");
 				return;
 			}
@@ -70,6 +67,10 @@ module.exports = {
           type: ActionTypes.CHANGE_SCREEN,
           screen: 'picturetaken',
       });
+
+      console.log("OK WILL SAVE PICTURE IN JUST OVER A SECOND!");
+      setTimeout(this.savePicture, 1500);
+      
     },
 
     savePicture: function(){
@@ -79,10 +80,6 @@ module.exports = {
       WebAPIUtils.sendImageToServer(dataURL);
 
       canvas.style.opacity = 0;
-      AppDispatcher.handleViewAction({
-          type: ActionTypes.IMAGE_READY_TO_BE_SAVED,
-          imageData: dataURL,
-      });
 
       AppDispatcher.handleViewAction({
           type: ActionTypes.CHANGE_SCREEN,
@@ -108,4 +105,4 @@ module.exports = {
     handleUserMediaError: function(error) {
       alert("[!] getUserMedia error: ", error);
     },
-}
+};

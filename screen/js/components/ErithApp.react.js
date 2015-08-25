@@ -1,16 +1,16 @@
 /** @jsx React.DOM */
 var React = require('react');
 //var ViewFinder 					= require('./ViewFinder.react')
-var MainScreen 					= require('./MainScreen.react')
-var TakePictureScreen 	= require('./TakePictureScreen.react')
-var PictureTakenScreen 	= require('./PictureTakenScreen.react')
-var MessageScreen 	= require('./MessageScreen.react')
+var MainScreen 					= require('./MainScreen.react');
+var TakePictureScreen 	= require('./TakePictureScreen.react');
+var PictureTakenScreen 	= require('./PictureTakenScreen.react');
+var MessageScreen 	= require('./MessageScreen.react');
 //var Camera = require('../utils/Camera')
-var ImageActionCreators = require('../actions/ImageActionCreators')
-var d3viewfinder = require('../lib/viewfinder')
-var $ = require('../lib/jquery.min')
-var ScreenStore = require('../stores/ScreenStore')
-var MessageStore = require('../stores/MessageStore')
+var ImageActionCreators = require('../actions/ImageActionCreators');
+var d3viewfinder = require('../lib/viewfinder');
+var $ = require('../lib/jquery.min');
+var ScreenStore = require('../stores/ScreenStore');
+var MessageStore = require('../stores/MessageStore');
 var cx = require('react/lib/cx');
 
 React.initializeTouchEvents(true);
@@ -22,7 +22,7 @@ getStateFromStores = function(){
 		screen: ScreenStore.currentScreen(),
 		message: MessageStore.message() || "",
 	};
-}
+};
 
 var ErithApp = React.createClass({
 
@@ -53,21 +53,21 @@ var ErithApp = React.createClass({
   		switch (this.state.screen.id){
   			
   			case "takepicture":
-  				screen = <TakePictureScreen width={this.state.windowwidth} height={this.state.windowheight}/>
+  				screen = <TakePictureScreen width={this.state.windowwidth} height={this.state.windowheight}/>;
   				break;
 
 			case "picturetaken":
-	  			screen = <PictureTakenScreen width={this.state.windowwidth} height={this.state.windowheight}/>
+	  			screen = <PictureTakenScreen width={this.state.windowwidth} height={this.state.windowheight}/>;
 	  			break;
 
 	  		case "messages":
 	  			camerahidden = true;
-	  			screen = <MessageScreen width={this.state.windowwidth} height={this.state.windowheight}/>
+	  			screen = <MessageScreen width={this.state.windowwidth} height={this.state.windowheight}/>;
 	  			break;
 
   			default:
   				d3viewfinder.hidetags();
-  				screen = <MainScreen width={this.state.windowwidth} height={this.state.windowheight}/>
+  				screen = <MainScreen width={this.state.windowwidth} height={this.state.windowheight}/>;
   		}
 
 			var maskStyle ={
@@ -81,7 +81,7 @@ var ErithApp = React.createClass({
 				zIndex:-100,
 				width:480,
 				height:480,
-			}
+			};
 
 			var canvasStyle={
 				position:"absolute",
@@ -89,7 +89,7 @@ var ErithApp = React.createClass({
 				width:640,
 				height:480,
 				left: -(640-480)/2,
-			}
+			};
 
 
 			var svgStyle = {
@@ -97,14 +97,14 @@ var ErithApp = React.createClass({
 				top:  (this.state.windowheight - 640) / 2,
 				width:this.state.windowwidth,
 				height:640,
-			}
+			};
   		
    	 		var videoStyle={
 				position: "relative",
 				width:640,
 				height:480,
 				left: -(640-480)/2,
-			}
+			};
 			
 			
 			d3viewfinder.updatemessage(this.state.message);
@@ -120,7 +120,7 @@ var ErithApp = React.createClass({
 						    </div>
 							<svg id="overlay" style={svgStyle}></svg>
 						 </div>
-  			       </div>
+  			       </div>;
   	},
 
   	_onChange: function() {

@@ -36,7 +36,7 @@ var MessageScreen = React.createClass({
                       </div>
                   </div>
                 
-             </div>
+             </div>;
   },
 
   _handleTouch: function(e){

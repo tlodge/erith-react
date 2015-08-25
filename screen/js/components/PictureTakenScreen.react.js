@@ -25,7 +25,7 @@ var TakePictureScreen = React.createClass({
                       <div onTouchTap={this._handleCancel} className="cancel"></div>
                     </ReactCSSTransitionGroup>
                 </div>
-             )
+             );
   },
 
 
