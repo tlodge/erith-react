@@ -14,27 +14,37 @@ var CHANGE_EVENT = 'change';
 var MAX_IMAGES = 6;
 var imageCount  = 0;
 var _images = [];
+var _selected = "";
 
 var ActionTypes = ErithConstants.ActionTypes;
 
 
-function _saveImage(image){
+var _setSelected = function(selected){
+  _selected = selected;
+};
+
+var  _saveImage = function(image){
 	var index = imageCount++%(MAX_IMAGES);
 	window.sessionStorage.setItem("selfie"+ index, image);
-}
+};
 
-function _setImageList(images){
+var _setImageList = function(images){
   _images = images;
   imageCount = images.length;
-}
+};
 
-function _addImage(url){
+var _addImage = function(url){
   _images.push(url);
-}
+};
+
 var ImageStore = assign({}, EventEmitter.prototype, {
 
   getAll: function(){
     return _images.slice(0,MAX_IMAGES);
+  },
+
+  currentPicture: function(){
+    return _selected;
   },
 
   /*getAll: function(){
@@ -85,6 +95,11 @@ ImageStore.dispatchToken = AppDispatcher.register(function(action) {
       ImageStore.emitChange();
       break;
     
+    case ActionTypes.IMAGE_SELECTED:
+      _setSelected(action.action.image);
+      ImageStore.emitChange();
+      break;
+
     default:
       // no op
   }

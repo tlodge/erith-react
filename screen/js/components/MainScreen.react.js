@@ -90,13 +90,31 @@ var MainScreen = React.createClass({
           zIndex: -99999,
         };
 
-  			return <div>
-                <Image source={image} imageStyle={imageStyle} />
-                <div style={tagBoxStyle}><strong>12 March 2.30pm</strong></div>
-              </div>;
+
+        var hitStyle = {
+          position: 'absolute',
+          top: dimensions[i].y + dimensions[i].h - 25,
+          left: dimensions[i].x,
+          opacity: 0.8,
+          width:  w,
+          height:25,
+          textAlign: 'center',
+          lineHeight: "25px",
+          zIndex: 99999,
+        };
+
+  			return  <div>
+                  <Image source={image} hitStyle={hitStyle} imageStyle={imageStyle} />
+                  <div style={tagBoxStyle}><strong>12 March 2.30pm</strong></div>
+                </div>;
+
   		});
 
   		return <div>{images}</div>;
+  },
+
+  _tapped: function(){
+    console.log("APPED");
   },
 
   _onChange: function(event){
@@ -104,5 +122,6 @@ var MainScreen = React.createClass({
   }
 
 });
+
 
 module.exports = MainScreen;

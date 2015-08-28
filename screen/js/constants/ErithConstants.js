@@ -15,6 +15,7 @@ module.exports = {
 		IMAGE_READY_TO_BE_SAVED: null,
 		IMAGE_LIST:null,
 		IMAGE_SAVED_TO_SERVER:null,
+		IMAGE_SELECTED: null,
 		RAW_MESSAGE:null,
   	}),
 

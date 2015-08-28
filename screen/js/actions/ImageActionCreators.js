@@ -68,8 +68,8 @@ module.exports = {
           screen: 'picturetaken',
       });
 
-      console.log("OK WILL SAVE PICTURE IN JUST OVER A SECOND!");
-      setTimeout(this.savePicture, 1500);
+      //console.log("OK WILL SAVE PICTURE IN JUST OVER A SECOND!");
+      //setTimeout(this.savePicture, 1500);
       
     },
 
@@ -84,6 +84,13 @@ module.exports = {
       AppDispatcher.handleViewAction({
           type: ActionTypes.CHANGE_SCREEN,
           screen: 'home',
+      });
+    },
+
+    imageSelected: function(image){
+      AppDispatcher.handleViewAction({
+          type: ActionTypes.IMAGE_SELECTED,
+          image: image,
       });
     },
 

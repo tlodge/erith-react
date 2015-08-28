@@ -9,7 +9,7 @@ injectTapEventPlugin();
 function getStateFromStores(){
   return {
       message: MessageStore.message()
-  }
+  };
 }
 
 var MessageScreen = React.createClass({

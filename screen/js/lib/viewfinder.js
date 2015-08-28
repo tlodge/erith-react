@@ -143,7 +143,7 @@ var ViewFinder = {
    
     this.message(clicker,radius,cX, cY);
     this.tags();
-    setInterval(this.auto, 10000);
+    //setInterval(this.auto, 10000);
     
   },
 

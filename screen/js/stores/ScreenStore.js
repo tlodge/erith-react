@@ -17,6 +17,7 @@ var CHANGE_EVENT = 'change';
 var _screens = {
 			home :  {id:"home"},
 			takepicture: {id:"takepicture"},
+      fullpicture: {id:"fullpicture"},
 			picturetaken: {id:"picturetaken"},
       messages: {id:"messages"}
 };
@@ -25,10 +26,10 @@ var _currentscreen = "home";
 
 var ActionTypes = ErithConstants.ActionTypes;
 
-function _changeScreen(screen){
+var _changeScreen = function(screen){
 
 	_currentscreen = screen;
-}
+};
 
 var ScreenStore = assign({}, EventEmitter.prototype, {
 
@@ -72,6 +73,15 @@ AppDispatcher.register(function(action) {
           return;
       _changeScreen(action.action.screen);
        ScreenStore.emitChange();
+      break;
+
+    case ActionTypes.IMAGE_SELECTED:
+      AppDispatcher.waitFor([
+        ImageStore.dispatchToken
+      ]);
+      _changeScreen("fullpicture");
+      ScreenStore.emitChange();
+
       break;
 
     default:
