@@ -40,8 +40,11 @@ var  FullPictureScreen = React.createClass({
         width: '100%',
         top: 0,
         left: 0,
-        background: '#3f3f3f',
+        background: '#66b5a0',
         color: 'white',
+        textAlign: 'center',
+        lineHeight: '60px',
+        fontSize: '150%',
       };
 
       var tagbar = {
@@ -50,7 +53,7 @@ var  FullPictureScreen = React.createClass({
         width: '100%',
         bottom: 0,
         left: 0,
-        background: '#3f3f3f',
+        background: '#66b5a0',
         color: 'white',
       };
 
@@ -60,7 +63,7 @@ var  FullPictureScreen = React.createClass({
       };
 
     	return   <div onTouchTap={this._handleTouch}>
-                <div style={titlebar}></div>
+                <div style={titlebar}>full size</div>
                 <div style={imageStyle}> 
                   <div style={container}></div>
                 </div>
