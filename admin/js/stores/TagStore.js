@@ -17,6 +17,12 @@ var _tags = [];
 var ActionTypes = ErithConstants.ActionTypes;
 
 
+var _addtag = function(tag){
+  if (_tags.indexOf(tag) == -1){
+    _tags.push(tag);
+  }
+};
+
 var TagStore = assign({}, EventEmitter.prototype, {
 
   tags: function() {
@@ -48,6 +54,7 @@ AppDispatcher.register(function(action) {
   switch(action.action.type) {
 
 		case ActionTypes.ADD_TAG:
+        _addtag(action.action.tag);
 				TagStore.emitChange();
 				break;
 
