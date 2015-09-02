@@ -3,7 +3,7 @@ var ServerActionCreators = require("../actions/ServerActionCreators");
 
 module.exports = {
 	
-	getImages: function(image){
+	getImages: function(){
 
 		request
      		.get('/images')
@@ -14,6 +14,20 @@ module.exports = {
 		       }else{
 		         	ServerActionCreators.receivedImageList(res.body);
 		        }
+		    });
+	},
+
+	getTags: function(){
+
+		request
+     		.get('/tags')
+     		.set('Accept', 'application/json')
+     		.end(function(err, res){
+		       if (err){
+		         console.log(err);
+		       }else{
+		         ServerActionCreators.receivedTagList(res.body);
+		       }
 		    });
 	},
 

@@ -19,6 +19,13 @@ module.exports = {
         });
     },
 
+    receivedTagList: function(tags){
+        AppDispatcher.handleServerAction({
+          type: ActionTypes.RAW_TAGS,
+          tags: tags
+        });
+    },
+
     savedImageToServer: function(url){
       AppDispatcher.handleServerAction({
           type: ActionTypes.IMAGE_SAVED_TO_SERVER,

@@ -12,10 +12,10 @@ var d3viewfinder = require('../lib/viewfinder');
 var $ = require('../lib/jquery.min');
 var ScreenStore = require('../stores/ScreenStore');
 var MessageStore = require('../stores/MessageStore');
+var TagStore = require('../stores/TagStore');
 var cx = require('react/lib/cx');
 var injectTapEventPlugin = require("react-tap-event-plugin");
 injectTapEventPlugin();
-
 
 getStateFromStores = function(){
 	return {
@@ -23,6 +23,7 @@ getStateFromStores = function(){
 		windowheight:$(window).height(),
 		screen: ScreenStore.currentScreen(),
 		message: MessageStore.message() || "",
+		tags: TagStore.getAll(),
 	};
 };
 
@@ -35,6 +36,7 @@ var ErithApp = React.createClass({
 	componentDidMount: function(){
 	 	ScreenStore.addChangeListener(this._onChange);
 	 	MessageStore.addChangeListener(this._onChange);
+	 	TagStore.addChangeListener(this._onChange);
 	 	ImageActionCreators.setUpVideo();
 		d3viewfinder.create({vh:480, vw:480, oh:640, ow:$(window).width(), radius:200});
 		d3viewfinder.updatemessage(this.state.message);
@@ -43,12 +45,11 @@ var ErithApp = React.createClass({
 	componentWillUnmount: function(){
 		ScreenStore.removeChangeListener(this._onChange);
 		MessageStore.removeChangeListener(this._onChange);
+		TagStore.removeChangeListener(this._onChange);
 	},
 
   	render: function() {
-  		
-		
-	
+ 
   		var screen;
 
   		var camerahidden = false;
@@ -115,7 +116,8 @@ var ErithApp = React.createClass({
 		
 		
 		d3viewfinder.updatemessage(this.state.message);
-
+		d3viewfinder.updatetags(this.state.tags);
+		
 		return	<div>
 				    	<div>
 				    		<div>{screen}</div>

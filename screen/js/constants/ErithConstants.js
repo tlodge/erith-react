@@ -17,6 +17,8 @@ module.exports = {
 		IMAGE_SAVED_TO_SERVER:null,
 		IMAGE_SELECTED: null,
 		RAW_MESSAGE:null,
+		TAG_SELECTED:null,
+		RAW_TAGS:null,
   	}),
 
   	PayloadSources: keyMirror({

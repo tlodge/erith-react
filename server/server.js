@@ -38,10 +38,10 @@ var _getImageList = function(){
   		});
   		var images = list.map(function(filename){
   			return "/shared/uploads/"+filename;
-  		})
+  		});
   		return images.slice(0,Math.min(6,images.length));
   	});
-}
+};
 
 var _deleteImage = function(image){
 
@@ -54,16 +54,22 @@ var _deleteImage = function(image){
 		throw err;
 	});
 	
-}
+};
 
 app.get('/', function(req,res){
 	console.log("nice am here!");
 	res.send({success:true});
 });
+
 app.get('/images/', function(req,res){
 	_getImageList().then(function(images){
 		res.send(images);
 	});
+});
+
+
+app.get('/tags', function(req, res){
+	res.send(["happy", "sad", "angry", "tired", "quiet", "noisy", "frightened", "lonely"]);
 });
 
 app.post('/image/', function(req, res){
@@ -95,7 +101,7 @@ app.post('/message/', function(req, res){
 
 //this needs to be locked down..
 app.post('/delete/', function(req, res){
-	var components 	= req.body.image.split("/")
+	var components 	= req.body.image.split("/");
 	var image = components[components.length-1];
 	
 	_deleteImage(image)
@@ -105,7 +111,7 @@ app.post('/delete/', function(req, res){
 	.then(function(images){
 	 	res.send(images);
 	 	live.sendimages(images);
-	})
+	});
 });
 
 server.listen(8080);
