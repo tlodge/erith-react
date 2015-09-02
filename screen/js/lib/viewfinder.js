@@ -191,9 +191,7 @@ var ViewFinder = {
 
   updatetags: function(tags) {
     _tags = tags;
-    console.log("viewfwinfder uodated tags to");
-    console.log(_tags);
-     this.tags();
+    this.tags();
   },
 
   hidemessage: function() {

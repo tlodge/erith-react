@@ -16,6 +16,8 @@ module.exports = {
 		IMAGE_LIST:null,
 		IMAGE_SAVED_TO_SERVER: null,
 		IMAGE_DELETED: null,
+		ADD_TAG: null,
+		REMOVE_TAG: null,
   	}),
 
   	PayloadSources: keyMirror({

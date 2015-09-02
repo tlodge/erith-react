@@ -2,13 +2,11 @@ var React = require('react');
 var ImageStore = require('../stores/ImageStore');
 var ImageActionCreators = require('../actions/ImageActionCreators');
 var WebAPIUtils = require('../utils/WebAPIUtils');
-var injectTapEventPlugin = require("react-tap-event-plugin");
-injectTapEventPlugin();
 
 function getStateFromStores(){
   return {
       images: ImageStore.getAll()
-  }
+  };
 }
 
 var MainScreen = React.createClass({

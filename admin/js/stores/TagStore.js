@@ -2,27 +2,25 @@
  * Copyright (c) 2015, Tom Lodge
  * All rights reserved.
  *
- * MessageStore
+ * TagStore
  */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
 var ErithConstants = require('../constants/ErithConstants');
+
 var assign = require('object-assign');
 
 var CHANGE_EVENT = 'change';
 
-var _message="";
+var _tags = [];
 var ActionTypes = ErithConstants.ActionTypes;
 
-function _updateMessage(message){
-	_message = message;
-}
 
-var MessageStore = assign({}, EventEmitter.prototype, {
+var TagStore = assign({}, EventEmitter.prototype, {
 
-  message: function() {
-    return _message;
+  tags: function() {
+    return _tags;
   },
 
   emitChange: function() {
@@ -49,14 +47,17 @@ AppDispatcher.register(function(action) {
 
   switch(action.action.type) {
 
-		case ActionTypes.NEW_MESSAGE:
-			  _updateMessage(action.action.message);
-				MessageStore.emitChange();
+		case ActionTypes.ADD_TAG:
+				TagStore.emitChange();
 				break;
 
+    case ActionTypes.REMOVE_TAG:
+        TagStore.emitChange();
+        break;
+    
     default:
       // no op
   }
 });
 
-module.exports = MessageStore;
+module.exports = TagStore;

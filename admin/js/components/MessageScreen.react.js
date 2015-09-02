@@ -1,7 +1,7 @@
 var React = require('react/addons');
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 var MessageActionCreators = require('../actions/MessageActionCreators');
-var $ = require('../lib/jquery.min');
+var $ = require('jquery');
 var injectTapEventPlugin = require("react-tap-event-plugin");
 var MessageStore = require('../stores/MessageStore');
 var ENTER_KEY_CODE = 13;
@@ -12,7 +12,7 @@ function getStateFromStores(){
   return {
       currentmessage: MessageStore.message(),
   	  newmessage : ""
-  }
+  };
 }
 
 var MessageScreen = React.createClass({
@@ -41,7 +41,7 @@ var MessageScreen = React.createClass({
   			background: "#66b5a0",
   			height: height / 5,
   			width: '100%',
-  		}
+  		};
   		
   		var messagebox = {
   			background: "white",
@@ -52,13 +52,13 @@ var MessageScreen = React.createClass({
   			width:  width - padding,
   			height: messageboxheight,
   			opacity: 1.0,
-  		}
+  		};
   		
   		var buttonbar ={
   			position: "absolute",
   			bottom: padding,
   			left: padding/2,
-  		}
+  		};
   		
   		var messagetext = {
   			fontSize: "150%",
@@ -66,20 +66,20 @@ var MessageScreen = React.createClass({
   			height: messageboxheight - textareaheight - (56) - padding/2,
   			overflowY: 'auto',
   			clear: 'both',
-  		}
+  		};
   		
     	return <div>
-    			  <div style={greenbar}></div>
-    			  <div style={messagebox}>
-    			  	<div className="messageboxtitle"> current message </div>
-    			  	<div className="messageboxdate">05 Aug 2015 12.34</div>
-    			  	<div style={messagetext}>{this.state.currentmessage}</div>
-    			  	<MessageComposer message={this.state.newmessage} width={width-padding} height={messageboxheight} textareaheight={textareaheight} newMessage={this._newMessage} />
-    			  </div>
-    			  <div style={buttonbar}>
-    			  	<div onTouchTap={this._sendMessage} className="button">send</div>
-    			  </div>
-             </div>
+        			  <div style={greenbar}></div>
+        			  <div style={messagebox}>
+        			  	<div className="messageboxtitle"> current message </div>
+        			  	<div className="messageboxdate">05 Aug 2015 12.34</div>
+        			  	<div style={messagetext}>{this.state.currentmessage}</div>
+        			  	<MessageComposer message={this.state.newmessage} width={width-padding} height={messageboxheight} textareaheight={textareaheight} newMessage={this._newMessage} />
+        			  </div>
+        			  <div style={buttonbar}>
+        			  	<div onTouchTap={this._sendMessage} className="button">send</div>
+        			  </div>
+             </div>;
   },
 
   _sendMessage: function(){
@@ -88,7 +88,7 @@ var MessageScreen = React.createClass({
   },
   
   _newMessage: function(message){
-   	this.setState({newmessage:message})
+   	this.setState({newmessage:message});
   },
 
   _onChange: function(event){
@@ -111,12 +111,12 @@ var MessageComposer = React.createClass({
       height: this.props.textareaheight,
       width: this.props.width,
       fontSize: "120%"
-    }
+    };
 
 	var placement = {
 		position: 'absolute',
 		top: this.props.height - this.props.textareaheight ,
-	}
+	};
 	
     return (
     	<div style={placement}>
