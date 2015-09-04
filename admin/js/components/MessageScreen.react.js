@@ -73,7 +73,7 @@ var MessageScreen = React.createClass({
         			  <div style={messagebox}>
         			  	<div className="messageboxtitle"> current message </div>
         			  	<div className="messageboxdate">05 Aug 2015 12.34</div>
-        			  	<div style={messagetext}>{this.state.currentmessage}</div>
+        			  	<div style={messagetext}>{this.state.currentmessage.message}</div>
         			  	<MessageComposer message={this.state.newmessage} width={width-padding} height={messageboxheight} textareaheight={textareaheight} newMessage={this._newMessage} />
         			  </div>
         			  <div style={buttonbar}>

@@ -16,6 +16,9 @@ module.exports = function(server){
     },
     sendimages: function(images){
       io.emit("images", images);
-    }
-  }
-}
+    },
+    sendtags: function(tags){
+      io.emit("tags", tags);
+    },
+  };
+};

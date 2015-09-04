@@ -14,7 +14,11 @@ var assign = require('object-assign');
 
 var CHANGE_EVENT = 'change';
 
-var _message="This is a nice long test message that will be shown on the main page and which will work well with other stuff like twitter and facebook and email and the such";
+var _message={
+  message:"",
+  ts: 0,
+};
+
 var ActionTypes = ErithConstants.ActionTypes;
 
 function _updateMessage(message){

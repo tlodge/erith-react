@@ -49,10 +49,15 @@ AppDispatcher.register(function(action) {
 
   switch(action.action.type) {
 
-		case ActionTypes.NEW_MESSAGE:
-			  _updateMessage(action.action.message);
-				MessageStore.emitChange();
-				break;
+		//case ActionTypes.NEW_MESSAGE:
+		//	  _updateMessage(action.action.message);
+		//		MessageStore.emitChange();
+		//		break;
+    
+    case ActionTypes.RAW_MESSAGE:
+        _updateMessage(action.action.message);
+        MessageStore.emitChange();
+        break;
 
     default:
       // no op

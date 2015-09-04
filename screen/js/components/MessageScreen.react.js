@@ -32,7 +32,7 @@ var MessageScreen = React.createClass({
                   <div className="takepicbackground"></div>
                   <div onTouchTap={this._handleTouch} className="messagebox">
                       <div className="messagetext">
-                        {this.state.message}
+                        {this.state.message.message}
                       </div>
                   </div>
                 

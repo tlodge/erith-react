@@ -6,10 +6,10 @@ var ActionTypes = ErithConstants.ActionTypes;
 module.exports = {
 
     newMessage: function(message){
-        AppDispatcher.handleViewAction({
-          type: ActionTypes.NEW_MESSAGE,
-          message: message
-        });
+        //AppDispatcher.handleViewAction({
+        //  type: ActionTypes.NEW_MESSAGE,
+        //  message: message
+        //});
         WebAPIUtils.sendMessage(message);
     },
-}
+};

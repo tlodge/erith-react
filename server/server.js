@@ -6,6 +6,7 @@ var hbs = require('hbs');
 var app = express();
 var fs = require("fs");
 var path = require("path");
+var db = require("./db");
 
 Promise.promisifyAll(fs);
 
@@ -25,6 +26,8 @@ var live = require("./live")(server);
 
 var DIRECTORY = path.join("static","shared","uploads");
 var TRASHDIRECTORY = path.join("static","shared","trash");
+
+db.create_tables();
 
 var _getImageList = function(){
 	return fs.readdirAsync(DIRECTORY).then(function(list){
@@ -61,18 +64,42 @@ app.get('/', function(req,res){
 	res.send({success:true});
 });
 
-app.get('/images/', function(req,res){
-	_getImageList().then(function(images){
-		res.send(images);
+app.get('/tag/delete', function(req,res){
+	var tag = req.query.tag;
+	return db.delete_tag(tag).then(function(result){
+		return db.fetch_tags();
+	}, function(err){
+		res.send({success: false});
+	}).then(function(tags){
+		res.send(tags);
+		return tags;
+	}).then(function (tags){
+		live.sendtags(tags);
 	});
 });
 
-
-app.get('/tags', function(req, res){
-	res.send(["happy", "sad", "angry", "tired", "quiet", "noisy", "frightened", "lonely"]);
+app.get('/tag/add', function(req,res){
+	var tag = req.query.tag;
+	
+	return db.add_tag(tag).then(function(result){
+		return db.fetch_tags();
+	}, function(err){
+		res.send({success: false});
+	}).then(function(tags){
+		res.send(tags);
+		return tags;
+	}).then(function (tags){
+		live.sendtags(tags);
+	});
 });
 
-app.post('/image/', function(req, res){
+app.get('/tags', function(req, res){
+	return db.fetch_tags().then(function(result){
+		res.send(result);
+	});
+});
+
+app.post('/image/add', function(req, res){
 	var image = req.body.image;
 	var data = image.replace(/^data:image\/\w+;base64,/, "");
 	var buf = new Buffer(data, 'base64');
@@ -91,16 +118,15 @@ app.post('/image/', function(req, res){
 	});	
 });
 
-//this needs to be locked down..
-app.post('/message/', function(req, res){
-	var message = req.body.message;
-	res.send({success:true});
-	console.log("seen a new message so posting something live!!");
-	live.sendmessage(message);
+app.get('/images/', function(req,res){
+	_getImageList().then(function(images){
+		res.send(images);
+	});
 });
 
+
 //this needs to be locked down..
-app.post('/delete/', function(req, res){
+app.post('/image/delete/', function(req, res){
 	var components 	= req.body.image.split("/");
 	var image = components[components.length-1];
 	
@@ -111,6 +137,33 @@ app.post('/delete/', function(req, res){
 	.then(function(images){
 	 	res.send(images);
 	 	live.sendimages(images);
+	});
+});
+
+app.get('/message/latest', function(req,res){
+	return db.fetch_latest_message().then(function(result){
+		res.send(result);
+	}, function(error){
+		console.log(error);
+		res.send({message:"", ts:-1});
+	});
+});
+
+//this needs to be locked down..
+app.post('/message/add', function(req, res){
+	var message = req.body.message;
+	var ts = new Date().getTime();
+	return db.add_message(message,ts).then(function(result){
+		res.send({
+			message: message,
+			ts: ts,
+		});
+	}).then(function(){
+		console.log("sending live message!");
+		live.sendmessage({
+			message: message,
+			ts: ts,
+		});
 	});
 });
 

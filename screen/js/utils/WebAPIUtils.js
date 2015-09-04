@@ -31,10 +31,24 @@ module.exports = {
 		    });
 	},
 
+	getLatestMessage : function(){
+		request
+     		.get('/message/latest')
+     		.set('Accept', 'application/json')
+     		.end(function(err, res){
+		       if (err){
+		         console.log(err);
+		       }else{
+		         ServerActionCreators.receivedMessage(res.body);
+		       }
+		    });
+
+	},
+
 	sendImageToServer: function(image){
 
 		request
-     		.post('/image')
+     		.post('/image/add')
      		.send(JSON.stringify({image: image}))
      		.set('Accept', 'application/json')
      		.type('json')

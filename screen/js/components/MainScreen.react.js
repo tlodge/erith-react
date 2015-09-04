@@ -18,6 +18,7 @@ var MainScreen = React.createClass({
   componentDidMount: function() {
     ImageStore.addChangeListener(this._onChange);
     WebAPIUtils.getImages();
+    WebAPIUtils.getLatestMessage();
   },
 
   componentWillUnmount: function() {

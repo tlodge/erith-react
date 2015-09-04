@@ -8,6 +8,7 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
 var ErithConstants = require('../constants/ErithConstants');
+var WebAPIUtils = require('../utils/WebAPIUtils');
 
 var assign = require('object-assign');
 
@@ -15,11 +16,25 @@ var CHANGE_EVENT = 'change';
 
 var _tags = [];
 var ActionTypes = ErithConstants.ActionTypes;
+var MAXTAGS = 8;
 
+
+var _settags = function(tags){
+  _tags = tags;
+};
 
 var _addtag = function(tag){
-  if (_tags.indexOf(tag) == -1){
-    _tags.push(tag);
+  if (_tags.length < MAXTAGS){
+    if (_tags.indexOf(tag) == -1){
+      WebAPIUtils.addTag(tag);
+    }
+  }
+};
+
+var _removetag = function(tag){
+  var idx = _tags.indexOf(tag);
+  if (idx != -1){
+     WebAPIUtils.deleteTag(tag);
   }
 };
 
@@ -53,13 +68,17 @@ AppDispatcher.register(function(action) {
 
   switch(action.action.type) {
 
+    case ActionTypes.RAW_TAGS:
+        _settags(action.action.tags);
+        TagStore.emitChange();
+        break;
+
 		case ActionTypes.ADD_TAG:
         _addtag(action.action.tag);
-				TagStore.emitChange();
 				break;
 
     case ActionTypes.REMOVE_TAG:
-        TagStore.emitChange();
+        _removetag(action.action.tag);
         break;
     
     default:

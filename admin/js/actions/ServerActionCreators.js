@@ -12,8 +12,18 @@ module.exports = {
         });
     },
 
-    savedMessageToServer: function(message){
-        console.log(message);
+    receivedTagList: function(tags){
+        AppDispatcher.handleServerAction({
+          type: ActionTypes.RAW_TAGS,
+          tags: tags
+        });
+    },
+
+    receivedMessage: function(message){
+       AppDispatcher.handleServerAction({
+          type: ActionTypes.RAW_MESSAGE,
+          message: message,
+        });
     },
 
     savedImageToServer: function(url){
@@ -31,4 +41,4 @@ module.exports = {
           image: image
       });
     }
-}
+};

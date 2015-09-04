@@ -44,13 +44,19 @@ var TagScreen = React.createClass({
       width: '100%'
     };   
 
+    var tagcontainer = {
+      padding: 15
+    };
+
     var props = this.state;
 
     return <div>
         			<div style={greenbar}>
                   <div style={vcenter}><TagCreator /></div>
               </div>
-              <TagList {...props} />
+              <div style={tagcontainer}>
+                <TagList {...props} />
+              </div>
             </div>;
   },
 
@@ -102,13 +108,26 @@ TagCreator = React.createClass({
 TagList = React.createClass({
   render: function(){
     var tags = this.props.tags.map(function(tag){
-      return <li>{tag}</li>;
+      var props = {tag:tag};
+      return <Tag {...props}/>;
     });
 
     return <ul className="inline-list">
               {tags}
            </ul>;
   }
+});
+
+Tag = React.createClass({
+  
+  render: function(){
+    return <li><a onTouchTap={this._removeTag} className="button">{this.props.tag} x</a></li>; 
+  },
+
+  _removeTag: function(){
+    TagActionCreators.removeTag(this.props.tag);
+    console.log("would remove tag!!");
+  },
 });
 
 module.exports = TagScreen;

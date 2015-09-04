@@ -6,6 +6,8 @@ var MessageScreen = require('./components/MessageScreen.react');
 var TagScreen = require('./components/TagScreen.react');
 var injectTapEventPlugin = require("react-tap-event-plugin");
 var MessageStream = require('./utils/MessageStream');
+var WebAPIUtils = require('./utils/WebAPIUtils');
+
 //window.React = React; // export for http://fb.me/react-devtools
 var Router = require('react-router');
 var DefaultRoute = Router.DefaultRoute;
@@ -15,7 +17,12 @@ var RouteHandler = Router.RouteHandler;
 
 React.initializeTouchEvents(true);
 injectTapEventPlugin();
+
+WebAPIUtils.getTags();
+WebAPIUtils.getLatestMessage();
+
 MessageStream.init();
+
 
 var App = React.createClass({
 

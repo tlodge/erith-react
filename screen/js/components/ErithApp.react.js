@@ -22,7 +22,7 @@ getStateFromStores = function(){
 		windowwidth:$(window).width(),
 		windowheight:$(window).height(),
 		screen: ScreenStore.currentScreen(),
-		message: MessageStore.message() || "",
+		message: MessageStore.message(),
 		tags: TagStore.getAll(),
 	};
 };
@@ -39,7 +39,7 @@ var ErithApp = React.createClass({
 	 	TagStore.addChangeListener(this._onChange);
 	 	ImageActionCreators.setUpVideo();
 		d3viewfinder.create({vh:480, vw:480, oh:640, ow:$(window).width(), radius:200});
-		d3viewfinder.updatemessage(this.state.message);
+		d3viewfinder.updatemessage(this.state.message.message);
 	},
 
 	componentWillUnmount: function(){
@@ -115,7 +115,7 @@ var ErithApp = React.createClass({
 		};
 		
 		
-		d3viewfinder.updatemessage(this.state.message);
+		d3viewfinder.updatemessage(this.state.message.message);
 		d3viewfinder.updatetags(this.state.tags);
 		
 		return	<div>
