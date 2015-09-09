@@ -59,27 +59,28 @@ var MainScreen = React.createClass({
           height: h,
           clip: "rect(" + hdelta + "px, " + dimensions[i].w + "px," + (dimensions[i].h+hdelta) + "px, 0px)",
           zIndex: -99999,
-        }
+        };
 
         var deleteImageStyle ={
           position: 'absolute',
           top: dimensions[i].y + 15,
           left: dimensions[i].x + dimensions[i].w - 45,
-        }
+        };
 
   			return <div>
-                <Image source={image} imageStyle={imageStyle} />
+                <Image image={image} imageStyle={imageStyle} />
                 <TagBox x={dimensions[i].x}
                         y={dimensions[i].y} 
                         width={dimensions[i].w} 
-                        height={dimensions[i].h} />
-                <Delete source={image} x={dimensions[i].x}
+                        height={dimensions[i].h} 
+                        image={image}/>
+                <Delete image={image} x={dimensions[i].x}
                         y={dimensions[i].y} 
                         width={dimensions[i].w} />
-              </div>
+              </div>;
   		});
 
-  		return <div>{images}</div>
+  		return <div>{images}</div>;
   },
 
   _onChange: function(event){
@@ -105,15 +106,15 @@ var TagBox = React.createClass({
           lineHeight: "25px",
           zIndex: -99999,
           overflowX: 'hidden'
-      }
+      };
 
-      return <div style={tagBoxStyle}><strong>12 March 2.30pm</strong></div>
+      return <div style={tagBoxStyle}><strong>{this.props.image.ts}</strong></div>;
     }
 });
 
 var Image = React.createClass({
     render: function() {
-      return  <img src={this.props.source} style={this.props.imageStyle}></img>
+      return  <img src={this.props.image.image} style={this.props.imageStyle}></img>;
     },
 
     
@@ -126,15 +127,15 @@ var Delete = React.createClass({
           position: 'absolute',
           top: this.props.y + 15,
           left: this.props.x + this.props.width - 45,
-      }
+      };
 
-      return <div onTouchTap={this._deleteImage}  className="deleteImage" style={deleteImageStyle}>x</div>
+      return <div onTouchTap={this._deleteImage}  className="deleteImage" style={deleteImageStyle}>x</div>;
     },
 
     _deleteImage: function(){
       console.log("would delete");
-      console.log(this.props.source);
-      ImageActionCreators.deleteImage(this.props.source);
+      console.log(this.props.image);
+      ImageActionCreators.deleteImage(this.props.image.image);
     }
 });
 

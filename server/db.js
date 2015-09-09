@@ -72,6 +72,11 @@ module.exports = {
     	return this.execute(sql, [image,tags,ts,1]);
     },
 
+	delete_image: function(image, tags, ts){
+    	var sql = "UPDATE images SET active = 0 WHERE image = ?";
+    	return this.execute(sql, [image]);
+    },
+    
     create_tables: function(){
     	var tags 	 = "CREATE TABLE IF NOT EXISTS tags(tag CHAR(128), active INTEGER, UNIQUE(tag) ON CONFLICT REPLACE);";
     	var messages = "CREATE TABLE IF NOT EXISTS messages(message CHAR(512), ts INTEGER);";

@@ -111,7 +111,7 @@ app.post('/image/add', function(req, res){
 	var ts 	  = Date.now();
 	var filename  = path.join(DIRECTORY, ts + ".jpg");
 	var url = "/shared/uploads/"+ts+".jpg";
-	 
+
 	fs.writeFileAsync(filename, buf).then(function(){
 		res.send({success:true, url:url});
 	},function(err){
@@ -144,12 +144,18 @@ app.get('/images/', function(req,res){
 
 //this needs to be locked down..
 app.post('/image/delete/', function(req, res){
-	var components 	= req.body.image.split("/");
-	var image = components[components.length-1];
+	console.log("seen delete");
+	var image = req.body.image;
+	var components 	= image.split("/");
+	var file = components[components.length-1];
 	
-	_deleteImage(image)
+	_deleteImage(file)
 	
-	.then(_getImageList)
+	.then(db.delete_image(image))
+
+	.then(function(){
+		return db.fetch_image_list();
+	})
 
 	.then(function(images){
 	 	res.send(images);
