@@ -100,28 +100,45 @@ app.get('/tags', function(req, res){
 });
 
 app.post('/image/add', function(req, res){
+	console.log("AT IMAGE ADD!!");
 	var image = req.body.image;
+	var tags = req.body.tags;
+	console.log("got image with tags");
+	console.log(tags);
 	var data = image.replace(/^data:image\/\w+;base64,/, "");
 	var buf = new Buffer(data, 'base64');
 
 	var ts 	  = Date.now();
 	var filename  = path.join(DIRECTORY, ts + ".jpg");
-	
+	var url = "/shared/uploads/"+ts+".jpg";
+	 
 	fs.writeFileAsync(filename, buf).then(function(){
-		res.send({success:true, url:"/shared/uploads/"+ts+".jpg"});
+		res.send({success:true, url:url});
 	},function(err){
 		res.send({success:false});
-	}).then(_getImageList).then(function(images){
+	})
+	.then(db.create_image(url, tags.toString(), ts))
+	.then(function(){
+		return db.fetch_image_list();
+	}).then(function(images){
+		live.sendimages(images);
+	});
+
+	/*.then(_getImageList).then(function(images){
 		console.log("am here --- will send out images!!");
 		console.log(images);
 		live.sendimages(images);
-	});	
+	});*/	
 });
 
 app.get('/images/', function(req,res){
-	_getImageList().then(function(images){
+	
+	db.fetch_image_list().then(function(images){
 		res.send(images);
 	});
+	//_getImageList().then(function(images){
+	//	res.send(images);
+	//});
 });
 
 

@@ -190,6 +190,9 @@ var ViewFinder = {
   },
 
   updatetags: function(tags) {
+    console.log("d3 in update tags with");
+    console.log(tags);
+
     _tags = tags;
     this.tags();
   },
@@ -261,28 +264,20 @@ var ViewFinder = {
   },
 
   tags: function() {
-
+    console.log("d3 ----> in tags update with tags");
+    console.log(_tags);
     var wedge = 180 / 6 * Math.PI / 180;
-
-    var tagdata = _tags.map(function(tag) {
-      return {
-        text: tag,
-        selected: false
-      };
-    });
-
-    console.log("IN TAGS AND TAG DTAA IS");
-    console.log(tagdata);
-
+    
     var tagger = d3.select("g.tags");
 
-    var tags = tagger.selectAll("g.tag").data(tagdata, function(d) {
-      return d.text;
-    });
+    var tags = tagger.selectAll("g.tag");
 
-    var tag = tags.enter()
-      .append("g")
-      .attr("class", "tag");
+    var tag = tags.data(_tags, function(d) {
+                      return d.text;
+                   })
+                  .enter()
+                  .append("g")
+                  .attr("class", "tag");
 
 
     tag.append("circle")
@@ -291,24 +286,20 @@ var ViewFinder = {
       })
       .attr("r", 0)
       .attr("cx", function(d, i) {
-
         var offset = i < 4 ? 135 * Math.PI / 180 : (135 + 180) * Math.PI / 180;
         i = i % 4;
         return cX + (radius * 1.5 * Math.cos(offset + (i * wedge)));
-
       })
       .attr("cy", function(d, i) {
-
         var offset = i < 4 ? 135 * Math.PI / 180 : (135 + 180) * Math.PI / 180;
         i = i % 4;
         return cY + (radius * 1.5 * Math.sin(offset + (i * wedge)));
       })
-      .style("fill", "white")
+      //.style("fill", "white")
       .style("stroke", "black")
       .style("stroke-width", "2")
       .on("click", function(d, i) {
-
-        if (!d.selected) {
+        /*if (!d.selected) {
           d3.select(this).style("fill", "#008080");
           d3.select("text.tag-" + i).style("fill", "white");
           d.selected = true;
@@ -316,7 +307,8 @@ var ViewFinder = {
           d3.select(this).style("fill", "white");
           d3.select("text.tag-" + i).style("fill", "black");
           d.selected = false;
-        }
+        }*/
+        ImageActionCreators.tagSelected(d.text);
       });
 
     tag.append("text")
@@ -339,14 +331,14 @@ var ViewFinder = {
       .attr("dy", ".35em")
       .attr("text-anchor", "middle")
       .style("font-size", (radius / 4 * 0.4) + "px")
-      .style("fill", "black")
+      //.style("fill", "black")
       .style("opacity", 0)
       .text(function(d) {
         return d.text;
       })
       .on("click", function(d, i) {
-
-        if (!d.selected) {
+        ImageActionCreators.tagSelected(d.text);
+        /*if (!d.selected) {
           d3.select(this).style("fill", "white");
           d3.select("circle.tag-" + i).style("fill", "#008080");
           d.selected = true;
@@ -354,8 +346,20 @@ var ViewFinder = {
           d3.select(this).style("fill", "black");
           d3.select("circle.tag-" + i).style("fill", "white");
           d.selected = false;
-        }
+        }*/
       });
+      
+      //update
+
+      tags.select("text")
+          .style("fill", function(d){
+            return d.selected ? "white": "black";
+          });
+
+     tags.select("circle")
+          .style("fill", function(d){
+            return d.selected ? "#008080" : "white";
+          });
   },
 
   startpicturetaking: function() {

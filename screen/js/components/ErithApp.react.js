@@ -24,6 +24,7 @@ getStateFromStores = function(){
 		screen: ScreenStore.currentScreen(),
 		message: MessageStore.message(),
 		tags: TagStore.getAll(),
+		selected: TagStore.selected(),
 	};
 };
 
@@ -116,7 +117,12 @@ var ErithApp = React.createClass({
 		
 		
 		d3viewfinder.updatemessage(this.state.message.message);
-		d3viewfinder.updatetags(this.state.tags);
+		
+		console.log("UPDATING TAGS!!!");
+
+		d3viewfinder.updatetags(this.state.tags.map(function(tag){
+			return {text:tag, selected: this.state.selected.indexOf(tag) != -1};
+		}.bind(this)));
 		
 		return	<div>
 				    	<div>

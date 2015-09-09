@@ -8,14 +8,14 @@ var Image = React.createClass({
 
 
    	 	return 		<div> 
-   	 					<img  src={this.props.source} style={this.props.imageStyle}></img>
+   	 					<img  src={this.props.image.image} style={this.props.imageStyle}></img>
    	 					<div style={this.props.hitStyle} onTouchTap={this._showImage}></div>
    	 				</div>;
    	 			
   	},
 
   	_showImage: function(){
-  		ImageActionCreators.imageSelected(this.props.source);
+  		ImageActionCreators.imageSelected(this.props.image);
   	}
 });
 

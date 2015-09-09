@@ -20,6 +20,8 @@ var ActionTypes = ErithConstants.ActionTypes;
 
 
 var _setSelected = function(selected){
+  console.log("selceted image is");
+  console.log(selected);
   _selected = selected;
 };
 

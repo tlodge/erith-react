@@ -24,14 +24,15 @@ var  FullPictureScreen = React.createClass({
   },
 
   render: function() {
+     
       var imageStyle = {
          position: 'absolute',
           top: 60,
-          background: 'red url(' + this.state.currentpicture + ') no-repeat center center fixed',
-          '-webkit-background-size': 'cover',
-          '-moz-background-size': 'cover',
-          '-o-background': 'cover',
-          'background-size': 'cover',
+          background: 'red url(' + this.state.currentpicture.image + ') no-repeat center center fixed',
+          WebkitBackgroundSize: 'cover',
+          MozBackgroundSize: 'cover',
+          OBackground: 'cover',
+          backgroundSize: 'cover',
       };
 
       var titlebar = {
@@ -57,17 +58,30 @@ var  FullPictureScreen = React.createClass({
         color: 'white',
       };
 
+
+      console.log("tags are ");
+      console.log(this.state.currentpicture.tags);
+
+      var tags = this.state.currentpicture.tags.map(function(tag){
+          return <li>{tag}</li>;
+      });
+
       var container = {
         width: this.props.width,
         height: this.props.height -120,
       };
 
     	return   <div onTouchTap={this._handleTouch}>
-                <div style={titlebar}>full size</div>
+                <div style={titlebar}>{this.state.currentpicture.ts}</div>
                 <div style={imageStyle}> 
                   <div style={container}></div>
                 </div>
-                <div style={tagbar}></div>
+                <div style={tagbar}>
+                  <ul className="inline-list">
+                    {tags}
+                  </ul>
+                </div>
+
               </div>;
                
   },

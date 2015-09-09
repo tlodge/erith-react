@@ -12,6 +12,8 @@ module.exports = {
 		       if (err){
 		         console.log(err);
 		       }else{
+		       		console.log("OK RECEUVED");
+		       		console.log(res.body);
 		         	ServerActionCreators.receivedImageList(res.body);
 		        }
 		    });
@@ -45,11 +47,11 @@ module.exports = {
 
 	},
 
-	sendImageToServer: function(image){
-
+	sendImageToServer: function(data){
+		//JSON.stringify({image: image})
 		request
      		.post('/image/add')
-     		.send(JSON.stringify({image: image}))
+     		.send(data)
      		.set('Accept', 'application/json')
      		.type('json')
      		.end(function(err, res){

@@ -105,8 +105,8 @@ var MainScreen = React.createClass({
         };
 
   			return  <div>
-                  <Image source={image} hitStyle={hitStyle} imageStyle={imageStyle} />
-                  <div style={tagBoxStyle}><strong>12 March 2.30pm</strong></div>
+                  <Image image={image} hitStyle={hitStyle} imageStyle={imageStyle} />
+                  <div style={tagBoxStyle}><strong>{image.ts}</strong></div>
                 </div>;
 
   		});

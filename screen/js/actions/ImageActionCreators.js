@@ -3,6 +3,7 @@ var video;
 var dataURL;
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var ErithConstants = require('../constants/ErithConstants');
+var TagStore = require('../stores/TagStore');
 var WebAPIUtils = require('../utils/WebAPIUtils');
 var ActionTypes = ErithConstants.ActionTypes;
 var canvas;
@@ -77,7 +78,8 @@ module.exports = {
 
       //send the picture to the server
       console.log("sending image to server!");
-      WebAPIUtils.sendImageToServer(dataURL);
+      var tags = TagStore.selected();
+      WebAPIUtils.sendImageToServer({image:dataURL, tags:tags});
 
       canvas.style.opacity = 0;
 
@@ -91,6 +93,13 @@ module.exports = {
       AppDispatcher.handleViewAction({
           type: ActionTypes.IMAGE_SELECTED,
           image: image,
+      });
+    },
+
+    tagSelected: function(tag){
+      AppDispatcher.handleViewAction({
+         type: ActionTypes.TAG_SELECTED,
+         tag: tag,
       });
     },
 
