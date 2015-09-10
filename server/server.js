@@ -1,28 +1,31 @@
 var http = require('http');
 var Promise = require('bluebird');
 var express = require('express');
+var expressSession = require('express-session');
 var bodyparser = require('body-parser');
 var hbs = require('hbs');
 var app = express();
 var fs = require("fs");
 var path = require("path");
 var db = require("./db");
+var bcrypt = require('bcrypt');
 
 Promise.promisifyAll(fs);
 
 //to support POSTs
+app.use(expressSession({secret: 'erithS3cr3tKey'}));
 app.use(bodyparser.urlencoded({extended:false}));
 app.use(bodyparser.json());
 
-app.use('/screen/', express.static("static/screen/"));
-app.use('/shared/', express.static("static/shared/"));
-app.use('/admin/', express.static("static/admin/"));
+app.use('/', express.static("static/"));
+//app.use('/js/', express.static("static/js/"));
 
 app.set('view engine', 'html');
 
 app.engine('html', hbs.__express);
 var server = http.createServer(app);
 var live = require("./live")(server);
+var auth = require("./auth")(app);
 
 var DIRECTORY = path.join("static","shared","uploads");
 var TRASHDIRECTORY = path.join("static","shared","trash");
@@ -59,9 +62,30 @@ var _deleteImage = function(image){
 	
 };
 
-app.get('/', function(req,res){
-	console.log("nice am here!");
-	res.send({success:true});
+function ensureAuthenticated(req, res, next){
+  
+  if (req.isAuthenticated()){
+  	return next(null);
+  }
+  res.redirect("/login");
+}
+
+app.get('/createaccounts', function(req,res){
+	return db.create_user('admin', bcrypt.hashSync('er1thadm1n',10)).then(function(result){
+		return db.create_user('screen', bcrypt.hashSync('er1thscr33n',10));
+	}).then(function(){
+		res.send({success:true});
+	});
+});
+
+app.get('/', ensureAuthenticated, function(req,res){
+	console.log(req.user);
+	if (req.user.username === "admin"){
+		res.render('admin');
+	}else{
+		res.render('screen');
+	}
+	//res.render('admin');
 });
 
 app.get('/tag/delete', function(req,res){

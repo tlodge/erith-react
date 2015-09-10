@@ -20,6 +20,24 @@ module.exports = {
       	});
     },
 
+    fetch_user_with_name: function(username){
+    	var sql = "SELECT * FROM user WHERE username = ?";
+    	return this.execute(sql,username).then(function(results){
+    		return results.reduce(function(acc, obj){
+    			return obj;
+    		},null);
+    	});
+    },
+
+    fetch_user_details: function(username){
+    	var sql = "SELECT username FROM user WHERE username = ?";
+    	return this.execute(sql,username).then(function(results){
+    		return results.reduce(function(acc, obj){
+    			return obj;
+    		},null);
+    	});
+    },
+
     fetch_tags: function(){
 		var sql = "SELECT * FROM tags WHERE active = 1";
     	return this.execute(sql).then(function(results){
@@ -76,14 +94,19 @@ module.exports = {
     	var sql = "UPDATE images SET active = 0 WHERE image = ?";
     	return this.execute(sql, [image]);
     },
-    
+
+    create_user: function(username, password){
+		var sql = "INSERT INTO user (username, password) VALUES (?,?)";
+    	return this.execute(sql, [username, password]);
+    },
+
     create_tables: function(){
     	var tags 	 = "CREATE TABLE IF NOT EXISTS tags(tag CHAR(128), active INTEGER, UNIQUE(tag) ON CONFLICT REPLACE);";
     	var messages = "CREATE TABLE IF NOT EXISTS messages(message CHAR(512), ts INTEGER);";
     	var images   = "CREATE TABLE IF NOT EXISTS images (image CHAR(128), tags CHAR(512), ts INTEGER, active INTEGER, UNIQUE(image) ON CONFLICT REPLACE);";
-    	
+    	var user   	 = "CREATE TABLE IF NOT EXISTS user (username CHAR(128), password CHAR(128), UNIQUE(username) ON CONFLICT IGNORE);";
     	return Promise.all(
-    		[this.execute(tags), this.execute(messages), this.execute(images)]
+    		[this.execute(tags), this.execute(messages), this.execute(images), this.execute(user)]
     	).then(function(){
     		return true;
     	});
