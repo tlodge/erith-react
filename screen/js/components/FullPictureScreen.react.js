@@ -94,10 +94,10 @@ var  FullPictureScreen = React.createClass({
 
       var container = {
         width: this.props.width,
-        height: this.props.height,
+        height: this.props.height-120,
         marginLeft: 'auto',
         marginRight: 'auto',
-        textAlign: 'center',// -120,
+        textAlign: 'center',
         background: '#7bb6a4'
       };
 
@@ -108,6 +108,13 @@ var  FullPictureScreen = React.createClass({
       var mainimagestyle = {
         width: 640,
         height: 480,
+        verticalAlign: 'middle',
+      };
+
+      var helper ={
+        display: 'inline-block',
+        height: '100%',
+        verticalAlign: 'middle',
       };
 
        /*<div style={imageStyle}> 
@@ -121,12 +128,11 @@ var  FullPictureScreen = React.createClass({
                   <div style={titlebar}>{this.state.currentpicture.ts}</div>
                   
                   <div style={container}>
+                    <span style={helper}></span>
                     <img src={this.state.currentpicture.image} style={mainimagestyle}/>
                   </div>
 
                   <div style={tagbar}></div>
-
-                 
                     <div style={taglabelbar}>
                      <ul className="inline-list" style={listStyle}>
                         {tags}
