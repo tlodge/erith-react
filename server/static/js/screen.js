@@ -1,1 +1,1 @@
-../../../screen/js/bundle.js
+../../../screen/js/bundle.min.js

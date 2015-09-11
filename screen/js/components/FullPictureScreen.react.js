@@ -28,7 +28,7 @@ var  FullPictureScreen = React.createClass({
       var imageStyle = {
          position: 'absolute',
           top: 60,
-          background: 'red url(' + this.state.currentpicture.image + ') no-repeat center center fixed',
+          background: 'url(' + this.state.currentpicture.image + ') no-repeat center center fixed',
           WebkitBackgroundSize: 'cover',
           MozBackgroundSize: 'cover',
           OBackground: 'cover',
@@ -36,12 +36,11 @@ var  FullPictureScreen = React.createClass({
       };
 
       var titlebar = {
-        position: 'absolute',
         height: 60,
         width: '100%',
         top: 0,
         left: 0,
-        background: '#66b5a0',
+        background: '#445662',
         color: 'white',
         textAlign: 'center',
         lineHeight: '60px',
@@ -49,39 +48,91 @@ var  FullPictureScreen = React.createClass({
       };
 
       var tagbar = {
-         position: 'absolute',
+        position: 'absolute',
         height: 60,
         width: '100%',
         bottom: 0,
         left: 0,
-        background: '#66b5a0',
-        color: 'white',
+        background: '#445662',
       };
 
+     
+      var tagstyle ={
+          width: 50
+      };
 
-      console.log("tags are ");
-      console.log(this.state.currentpicture.tags);
+      var tagcontainer ={
+        width: 120,
+        marginLeft: 'auto',
+        marginRight: 'auto', 
+        textAlign: 'center',
+      };
 
       var tags = this.state.currentpicture.tags.map(function(tag){
-          return <li>{tag}</li>;
+          if (tag.trim() !== ""){
+            return (<li>
+                  <div style={tagcontainer}>
+                    <img src="/images/tag.svg" style={tagstyle}/>
+                    <div>{tag}</div>
+                  </div>
+                </li>);
+          }
+          return "";
       });
+
+       var taglabelbar ={
+        position: 'absolute',
+        height: 90,
+        width: '100%',
+        bottom: 0,
+        left: 0,
+        color: 'white',
+        fontSize: '130%',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+      };
 
       var container = {
         width: this.props.width,
-        height: this.props.height -120,
+        height: this.props.height,
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        textAlign: 'center',// -120,
+        background: '#7bb6a4'
       };
 
-    	return   <div onTouchTap={this._handleTouch}>
-                <div style={titlebar}>{this.state.currentpicture.ts}</div>
-                <div style={imageStyle}> 
-                  <div style={container}></div>
-                </div>
-                <div style={tagbar}>
-                  <ul className="inline-list">
-                    {tags}
-                  </ul>
-                </div>
+      var listStyle = {
+        width: tagcontainer.width * (tags.length + 1)
+      };
 
+      var mainimagestyle = {
+        width: 640,
+        height: 480,
+      };
+
+       /*<div style={imageStyle}> 
+                  <div style={container}>
+
+                  </div>
+                </div>*/
+
+        /*<*/
+    	return   <div onTouchTap={this._handleTouch}>
+                  <div style={titlebar}>{this.state.currentpicture.ts}</div>
+                  
+                  <div style={container}>
+                    <img src={this.state.currentpicture.image} style={mainimagestyle}/>
+                  </div>
+
+                  <div style={tagbar}></div>
+
+                 
+                    <div style={taglabelbar}>
+                     <ul className="inline-list" style={listStyle}>
+                        {tags}
+                      </ul>
+                    </div>
+                 
               </div>;
                
   },

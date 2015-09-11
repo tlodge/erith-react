@@ -41,12 +41,14 @@ var ErithApp = React.createClass({
 	 	ImageActionCreators.setUpVideo();
 		d3viewfinder.create({vh:480, vw:480, oh:640, ow:$(window).width(), radius:200});
 		d3viewfinder.updatemessage(this.state.message.message);
+		window.addEventListener('resize', this._handleResize);
 	},
 
 	componentWillUnmount: function(){
 		ScreenStore.removeChangeListener(this._onChange);
 		MessageStore.removeChangeListener(this._onChange);
-		TagStore.removeChangeListener(this._onChange);
+		TagStore.removeChangeListener(this._onChange);	
+		window.removeEventListener('resize', this._handleResize);
 	},
 
   	render: function() {
@@ -136,6 +138,11 @@ var ErithApp = React.createClass({
 						<svg id="overlay" style={svgStyle}></svg>
 					 </div>	
 			       </div>;
+  	},
+
+  	_handleResize: function(){
+  		this.setState({windowwidth: $(window).width(), windowheight:$(window).height()});
+  		d3viewfinder.update({vh:480, vw:480, oh:640, ow:$(window).width(), radius:200});
   	},
 
   	_onChange: function() {

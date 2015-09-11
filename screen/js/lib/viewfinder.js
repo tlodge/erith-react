@@ -20,6 +20,7 @@ var _tags;
 var ViewFinder = {
 
 
+
   create: function(props) {
     self = this;
     cX = props.ow / 2; //+ (props.ow-props.vw)/2;
@@ -98,6 +99,7 @@ var ViewFinder = {
 
 
     camera.append("circle")
+      .attr("class","lens")
       .attr("cx", originX)
       .attr("cy", originY - 10)
       .attr("r", lensradius)
@@ -106,6 +108,7 @@ var ViewFinder = {
       .on("click", this.startpicturetaking);
 
     camera.append("rect")
+      .attr("class", "camerabox")
       .attr("x", originX - radius / 4 - 5)
       .attr("y", originY - cameraheight / 2)
       .attr("width", (radius / 4 * 2) + 10)
@@ -116,6 +119,7 @@ var ViewFinder = {
       .on("click", this.startpicturetaking);
 
     camera.append("circle")
+      .attr("class", "lens")
       .attr("cx", originX)
       .attr("cy", originY)
       .attr("r", lensradius)
@@ -124,6 +128,7 @@ var ViewFinder = {
       .on("click", this.startpicturetaking);
 
     camera.append("circle")
+      .attr("class", "lens")
       .attr("cx", originX)
       .attr("cy", originY)
       .attr("r", lensradius - 3)
@@ -137,6 +142,7 @@ var ViewFinder = {
       .attr("cx", originX - lensradius - 10)
       .attr("cy", originY - lensradius + 15)
       .attr("r", 5)
+      .attr("class","lens2")
       .style("fill", "white")
       .style("stroke", "black")
       .on("click", this.startpicturetaking);
@@ -150,6 +156,31 @@ var ViewFinder = {
 
   },
 
+  update: function(props){
+      cX = props.ow / 2; //+ (props.ow-props.vw)/2;
+      cY = props.oh / 2;
+      radius = props.vh / 2;
+      originX = props.ow / 2;
+      originY = props.vh + (props.oh - props.vh) / 2; 
+      
+      var lensradius = radius / 6;
+      
+      d3.select('circle.outervfc').attr("cx", cX);
+      d3.select('circle.middlevfc').attr("cx", cX);
+      d3.select('circle.innervfc').attr("cx", cX);
+      d3.select('circle.clicker').attr("cx", originX);
+      d3.select('text.countdown').attr("cx", originX);
+      d3.selectAll('circle.lens').attr("cx", originX);
+      d3.select('rect.camerabox').attr("x", originX - radius / 4 - 5);
+      d3.select('circle.lens2').attr("cx", originX - lensradius - 10);
+
+      var arc = d3.svg.arc().innerRadius(radius + 7).outerRadius(radius + 50).startAngle(Math.PI / 2).endAngle(-Math.PI / 2);
+
+      d3.select('path.messagepath')
+          .attr("d", arc)
+          .attr("transform", "translate(" + cX + "," + cY + ")");
+  },
+
   showmessagescreen: function() {
     console.log("in message clicked!!!!");
     ImageActionCreators.messageClicked();
@@ -160,6 +191,7 @@ var ViewFinder = {
     var arc = d3.svg.arc().innerRadius(radius + 7).outerRadius(radius + 50).startAngle(Math.PI / 2).endAngle(-Math.PI / 2);
 
     var path = node.append("path")
+      .attr("class", "messagepath")
       .attr("d", arc)
       .attr("id", "path1")
       .attr("transform", "translate(" + cx + "," + cy + ")")

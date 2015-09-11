@@ -10,5 +10,6 @@ screen/browser-bundle.js
 admin/browser-bundle.js
 server/static/shared/uploads/*
 server/static/shared/trash/*
+server/erith.db
 *~
 .DS_Store

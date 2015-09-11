@@ -1,1 +1,1 @@
-../../../admin/js/bundle.js
+../../../admin/js/bundle.min.js
