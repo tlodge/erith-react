@@ -126,7 +126,16 @@ var ErithApp = React.createClass({
 			return {text:tag, selected: this.state.selected.indexOf(tag) != -1};
 		}.bind(this)));
 		
-		return	<div>
+		var containerstyle = {
+			width: $(window).width(),
+			height: $(window).height(),
+			maxWidth: $(window).width(),
+			maxHeight: $(window).height(),
+			overflowX: 'hidden',
+			overflowY: 'hidden',
+		};
+
+		return	<div style={containerstyle}>
 				    	<div>
 				    		<div>{screen}</div>
 				    	</div>

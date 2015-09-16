@@ -42,8 +42,15 @@ var App = React.createClass({
 
 		var props = this.state;
 		
+		var containerstyle = {
+			width: $(window).width(),
+			height: $(window).height(),
+			overflowX: 'hidden',
+			overflowY: 'hidden',
+		};
+		
 		return(
-	        <div>
+	        <div style={containerstyle}>
 	          <RouteHandler {...props}/>
 	          <div className="navigation">
 	            <ul className="navbar">
