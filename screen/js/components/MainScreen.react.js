@@ -78,12 +78,11 @@ var MainScreen = React.createClass({
 
         var tagBoxStyle ={
           position: 'absolute',
-
           top: dimensions[i].y + dimensions[i].h - 25,
           left: dimensions[i].x,
           background: '#333333',
           opacity: 0.8,
-          width:  w,
+          width:   dimensions[i].w,
           height:25,
           color: 'white',
           textAlign: 'center',

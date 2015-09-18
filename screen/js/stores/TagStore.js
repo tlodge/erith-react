@@ -18,6 +18,7 @@ var ActionTypes = ErithConstants.ActionTypes;
 
 var _setTags = function(tags){
   _tags = tags;
+  _selected = [];
 };
 
 var _deselectTags = function(){

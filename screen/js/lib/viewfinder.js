@@ -295,19 +295,18 @@ var ViewFinder = {
 
   },
 
+  //works fine - execpt new ones wont be displayed by default as radius set to 0, if 
+  //knew what screen on, could update the radius to reflect this...
   tags: function() {
-    console.log("d3 ----> in tags update with tags");
-    console.log(_tags);
+   
     var wedge = 180 / 6 * Math.PI / 180;
     
     var tagger = d3.select("g.tags");
 
-    var tags = tagger.selectAll("g.tag");
+    var tags = tagger.selectAll("g.tag")
+              .data(_tags, function(d){return d.text;});
 
-    var tag = tags.data(_tags, function(d) {
-                      return d.text;
-                   })
-                  .enter()
+    var tag = tags.enter()
                   .append("g")
                   .attr("class", "tag");
 
@@ -317,48 +316,16 @@ var ViewFinder = {
         return "tag tag-" + i;
       })
       .attr("r", 0)
-      .attr("cx", function(d, i) {
-        var offset = i < 4 ? 135 * Math.PI / 180 : (135 + 180) * Math.PI / 180;
-        i = i % 4;
-        return cX + (radius * 1.5 * Math.cos(offset + (i * wedge)));
-      })
-      .attr("cy", function(d, i) {
-        var offset = i < 4 ? 135 * Math.PI / 180 : (135 + 180) * Math.PI / 180;
-        i = i % 4;
-        return cY + (radius * 1.5 * Math.sin(offset + (i * wedge)));
-      })
       //.style("fill", "white")
       .style("stroke", "black")
       .style("stroke-width", "2")
-      .on("click", function(d, i) {
-        /*if (!d.selected) {
-          d3.select(this).style("fill", "#008080");
-          d3.select("text.tag-" + i).style("fill", "white");
-          d.selected = true;
-        } else {
-          d3.select(this).style("fill", "white");
-          d3.select("text.tag-" + i).style("fill", "black");
-          d.selected = false;
-        }*/
+      .on("click", function(d) {
         ImageActionCreators.tagSelected(d.text);
       });
 
     tag.append("text")
       .attr("class", function(d, i) {
         return "tag tag-" + i;
-      })
-      .attr("x", function(d, i) {
-
-        var offset = i < 4 ? 135 * Math.PI / 180 : (135 + 180) * Math.PI / 180;
-        i = i % 4;
-        return cX + (radius * 1.5 * Math.cos(offset + (i * wedge)));
-
-      })
-      .attr("y", function(d, i) {
-
-        var offset = i < 4 ? 135 * Math.PI / 180 : (135 + 180) * Math.PI / 180;
-        i = i % 4;
-        return cY + (radius * 1.5 * Math.sin(offset + (i * wedge)));
       })
       .attr("dy", ".35em")
       .attr("text-anchor", "middle")
@@ -368,30 +335,45 @@ var ViewFinder = {
       .text(function(d) {
         return d.text;
       })
-      .on("click", function(d, i) {
+      .on("click", function(d) {
         ImageActionCreators.tagSelected(d.text);
-        /*if (!d.selected) {
-          d3.select(this).style("fill", "white");
-          d3.select("circle.tag-" + i).style("fill", "#008080");
-          d.selected = true;
-        } else {
-          d3.select(this).style("fill", "black");
-          d3.select("circle.tag-" + i).style("fill", "white");
-          d.selected = false;
-        }*/
       });
       
       //update
 
-      tags.select("text")
+     tags.select("text")
+          .attr("x", function(d,i) {
+            var offset = i < 4 ? 135 * Math.PI / 180 : (135 + 180) * Math.PI / 180;
+            i = i % 4;
+            return cX + (radius * 1.5 * Math.cos(offset + (i * wedge)));
+          })
+          .attr("y", function(d, i) {
+
+            var offset = i < 4 ? 135 * Math.PI / 180 : (135 + 180) * Math.PI / 180;
+            i = i % 4;
+            return cY + (radius * 1.5 * Math.sin(offset + (i * wedge)));
+          })
           .style("fill", function(d){
             return d.selected ? "white": "black";
           });
 
      tags.select("circle")
+         .attr("cx", function(d, i) {
+            var offset = i < 4 ? 135 * Math.PI / 180 : (135 + 180) * Math.PI / 180;
+            i = i % 4;
+            return cX + (radius * 1.5 * Math.cos(offset + (i * wedge)));
+          })
+          .attr("cy", function(d, i) {
+            var offset = i < 4 ? 135 * Math.PI / 180 : (135 + 180) * Math.PI / 180;
+            i = i % 4;
+            return cY + (radius * 1.5 * Math.sin(offset + (i * wedge)));
+          })
           .style("fill", function(d){
             return d.selected ? "#008080" : "white";
           });
+
+    //exit
+    tags.exit().remove();
   },
 
   startpicturetaking: function() {
