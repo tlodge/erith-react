@@ -2,6 +2,7 @@ var http = require('http');
 var Promise = require('bluebird');
 var express = require('express');
 var expressSession = require('express-session');
+var RedisStore = require('connect-redis')(expressSession);
 var bodyparser = require('body-parser');
 var hbs = require('hbs');
 var app = express();
@@ -9,11 +10,24 @@ var fs = require("fs");
 var path = require("path");
 var db = require("./db");
 var bcrypt = require('bcrypt');
-
+var moment = require('moment');
 Promise.promisifyAll(fs);
 
 //to support POSTs
-app.use(expressSession({secret: 'erithS3cr3tKey'}));
+app.use(expressSession(
+                      {
+                        store: new RedisStore({
+                          host: "127.0.0.1",
+                          port: 6379,
+                          prefix: 'sess'
+                        }),
+                        key: 'express.sid',
+                        resave: true,
+                        saveUninitialized:true,
+                        cookie:{maxAge:10*365*24*60*60*1000},
+                        secret: 'erithS3cr3tKey',
+                      }
+));
 app.use(bodyparser.urlencoded({extended:false}));
 app.use(bodyparser.json());
 
@@ -124,7 +138,7 @@ app.get('/tags', function(req, res){
 });
 
 app.post('/image/add', function(req, res){
-	console.log("AT IMAGE ADD!!");
+	
 	var image = req.body.image;
 	var tags = req.body.tags;
 	console.log("got image with tags");
@@ -203,13 +217,12 @@ app.post('/message/add', function(req, res){
 	return db.add_message(message,ts).then(function(result){
 		res.send({
 			message: message,
-			ts: ts,
+			ts:  moment(ts).format('MMM Do YY, h:mm'), 
 		});
 	}).then(function(){
-		console.log("sending live message!");
 		live.sendmessage({
 			message: message,
-			ts: ts,
+			ts: moment(ts).format('MMM Do YY, h:mm'), 
 		});
 	});
 });
