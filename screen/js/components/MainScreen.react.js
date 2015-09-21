@@ -58,6 +58,8 @@ var MainScreen = React.createClass({
         {x:width/2 + (width/2)/1.5 + padding, y:(height/3)*2+padding, h:height/3-padding, w:(width/2)-(width/2)/1.5}
       ];
 
+      var TAGBOXHEIGHT = 40;
+
   		var images = this.state.images.map(function(image, i){
       	var landscape = dimensions[i].w * wtoh > dimensions[i].h;
 
@@ -78,34 +80,41 @@ var MainScreen = React.createClass({
 
         var tagBoxStyle ={
           position: 'absolute',
-          top: dimensions[i].y + dimensions[i].h - 25,
+          top: dimensions[i].y + dimensions[i].h - TAGBOXHEIGHT,
           left: dimensions[i].x,
           background: '#333333',
           opacity: 0.8,
           width:   dimensions[i].w,
-          height:25,
+          height:TAGBOXHEIGHT,
           color: 'white',
           textAlign: 'center',
-          lineHeight: "25px",
+          lineHeight: TAGBOXHEIGHT + "px",
           zIndex: -99999,
+          paddingLeft: 10,
+          paddingRight: 10,
         };
 
 
         var hitStyle = {
           position: 'absolute',
-          top: dimensions[i].y + dimensions[i].h - 25,
+          top: dimensions[i].y + dimensions[i].h - TAGBOXHEIGHT,
           left: dimensions[i].x,
           opacity: 0.8,
           width:  w,
-          height:25,
+          height:TAGBOXHEIGHT,
           textAlign: 'center',
-          lineHeight: "25px",
+          lineHeight: TAGBOXHEIGHT + "px",
           zIndex: 99999,
         };
 
+        var alignment = dimensions[i].x === 0 ? "left" : "right";
+
   			return  <div>
                   <Image image={image} hitStyle={hitStyle} imageStyle={imageStyle} />
-                  <div style={tagBoxStyle}><strong>{image.ts}</strong></div>
+                  <div className="clearifx" style={tagBoxStyle}>
+                     <strong>{image.ts}</strong>
+                     <div className={alignment}><i className="fa fa-search-plus"></i></div>
+                  </div>
                 </div>;
 
   		});
@@ -122,6 +131,7 @@ var MainScreen = React.createClass({
   }
 
 });
+
 
 
 module.exports = MainScreen;

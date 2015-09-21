@@ -24,7 +24,8 @@ module.exports = {
 
 	  socket.on('reload', function (data) {
 	  	console.log("seen a reload");
-	  	location.reload(true);  
+	  	SystemActionCreators.reload();
+	  	
 	  });
 
 	  socket.on('ping', function (data) {

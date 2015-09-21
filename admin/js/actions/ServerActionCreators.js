@@ -49,5 +49,13 @@ module.exports = {
           type: ActionTypes.PING_RESPONSE,
           response: response
       });
+    },
+
+    receivedReloadAck: function(reload){
+      
+       AppDispatcher.handleServerAction({
+          type: ActionTypes.RELOAD_ACK,
+          reload: reload
+      });
     }
 };

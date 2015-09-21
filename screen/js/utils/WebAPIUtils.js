@@ -75,5 +75,18 @@ module.exports = {
 		        console.log(res.body);
 		       }
 		    });
+	},
+
+	reloadAck: function(){
+		request
+     		.get('/system/reloadack')
+     		.set('Accept', 'application/json')
+     		.end(function(err, res){
+		       if (err){
+		         location.reload(true);  
+		       }else{
+		         location.reload(true);  
+		       }
+		    });	
 	}
 };

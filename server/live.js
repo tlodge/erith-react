@@ -28,6 +28,10 @@ module.exports = function(server){
     sendreload: function(){
       io.emit("reload", {});
     },
+    sendreloadack: function(reload){
+      console.log("sending a reload ack!!");
+      io.emit("reloadack", reload);
+    },
     sendresponse: function(response){
       io.emit("pingresponse", response);
     },

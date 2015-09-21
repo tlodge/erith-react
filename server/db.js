@@ -77,7 +77,7 @@ module.exports = {
     			return{
     				image: row.image,
     				tags: row.tags.split(","),
-    				ts: moment(row.ts).format('MMM Do YY, h:mm'),
+    				ts: moment(row.ts).format('MMM Do, h:mm'),
     			};
     		});
     	});

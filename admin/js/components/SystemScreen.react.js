@@ -8,7 +8,8 @@ injectTapEventPlugin();
 
 function getStateFromStores(){
   return {
-     ping: PingStore.latest()
+    ping: PingStore.latest(),
+    reload: PingStore.reload(),
   };
 }
 var SystemScreen = React.createClass({
@@ -49,12 +50,13 @@ var SystemScreen = React.createClass({
       padding: 15
     };
 
-    var latestping;
+    var latestping, latestreload;
 
-    console.log("ok ping is");
-    console.log(this.state.ping);
     if (this.state.ping.ts){
       latestping = this.state.ping.id + ": " + this.state.ping.ts; 
+    }
+    if (this.state.reload.ts){
+      latestreload = "last reload: " + this.state.reload.ts;
     }
 
     return <div>
@@ -68,6 +70,7 @@ var SystemScreen = React.createClass({
                   </div>
                    <div className="large-10 columns">
                       <p> This will get the app to reload from the network.  Worth doing if it appears to be misbehaving </p>
+                      <p><strong> {latestreload} </strong></p>
                   </div>
                 </div>
                 <div className="row">

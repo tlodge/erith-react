@@ -84,6 +84,17 @@ function ensureAuthenticated(req, res, next){
   res.redirect("/login");
 }
 
+function ensureAdmin(req, res, next){
+  console.log("in ensure admin!!");
+  if (req.isAuthenticated()){
+  	console.log(req.user);
+  	if (req.user.username === "admin"){
+  		return next(null);
+  	}
+  }
+  res.redirect("/login");
+}
+
 app.get('/createaccounts', function(req,res){
 	return db.create_user('admin', bcrypt.hashSync('er1thadm1n',10)).then(function(result){
 		return db.create_user('screen', bcrypt.hashSync('er1thscr33n',10));
@@ -102,42 +113,13 @@ app.get('/', ensureAuthenticated, function(req,res){
 	//res.render('admin');
 });
 
-app.get('/tag/delete', function(req,res){
-	var tag = req.query.tag;
-	return db.delete_tag(tag).then(function(result){
-		return db.fetch_tags();
-	}, function(err){
-		res.send({success: false});
-	}).then(function(tags){
-		res.send(tags);
-		return tags;
-	}).then(function (tags){
-		live.sendtags(tags);
-	});
-});
-
-app.get('/tag/add', function(req,res){
-	var tag = req.query.tag;
-	
-	return db.add_tag(tag).then(function(result){
-		return db.fetch_tags();
-	}, function(err){
-		res.send({success: false});
-	}).then(function(tags){
-		res.send(tags);
-		return tags;
-	}).then(function (tags){
-		live.sendtags(tags);
-	});
-});
-
-app.get('/tags', function(req, res){
+app.get('/tags', ensureAuthenticated, function(req, res){
 	return db.fetch_tags().then(function(result){
 		res.send(result);
 	});
 });
 
-app.post('/image/add', function(req, res){
+app.post('/image/add',ensureAuthenticated, function(req, res){
 	
 	var image = req.body.image;
 	var tags = req.body.tags;
@@ -169,7 +151,7 @@ app.post('/image/add', function(req, res){
 	});*/	
 });
 
-app.get('/images/', function(req,res){
+app.get('/images/',ensureAuthenticated, function(req,res){
 	
 	db.fetch_image_list().then(function(images){
 		res.send(images);
@@ -179,9 +161,49 @@ app.get('/images/', function(req,res){
 	//});
 });
 
+app.get('/message/latest',ensureAuthenticated, function(req,res){
+	return db.fetch_latest_message().then(function(result){
+		res.send(result);
+	}, function(error){
+		console.log(error);
+		res.send({message:"", ts:"none"});
+	});
+});
+
+
+/*  admin specific routes... */
+
+app.get('/tag/delete', ensureAdmin, function(req,res){
+	var tag = req.query.tag;
+	return db.delete_tag(tag).then(function(result){
+		return db.fetch_tags();
+	}, function(err){
+		res.send({success: false});
+	}).then(function(tags){
+		res.send(tags);
+		return tags;
+	}).then(function (tags){
+		live.sendtags(tags);
+	});
+});
+
+app.get('/tag/add', ensureAdmin, function(req,res){
+	var tag = req.query.tag;
+	
+	return db.add_tag(tag).then(function(result){
+		return db.fetch_tags();
+	}, function(err){
+		res.send({success: false});
+	}).then(function(tags){
+		res.send(tags);
+		return tags;
+	}).then(function (tags){
+		live.sendtags(tags);
+	});
+});
 
 //this needs to be locked down..
-app.post('/image/delete/', function(req, res){
+app.post('/image/delete/',ensureAdmin, function(req, res){
 	console.log("seen delete");
 	var image = req.body.image;
 	var components 	= image.split("/");
@@ -200,18 +222,8 @@ app.post('/image/delete/', function(req, res){
 	 	live.sendimages(images);
 	});
 });
-
-app.get('/message/latest', function(req,res){
-	return db.fetch_latest_message().then(function(result){
-		res.send(result);
-	}, function(error){
-		console.log(error);
-		res.send({message:"", ts:"none"});
-	});
-});
-
 //this needs to be locked down..
-app.post('/message/add', function(req, res){
+app.post('/message/add', ensureAdmin, function(req, res){
 	var message = req.body.message;
 	var ts = new Date().getTime();
 	return db.add_message(message,ts).then(function(result){
@@ -227,20 +239,26 @@ app.post('/message/add', function(req, res){
 	});
 });
 
-app.get('/system/reload', function(req, res){
+
+app.get('/system/reloadack', function(req, res){
+	live.sendreloadack({ts:moment(Date.now()).format('MMM Do YY, h:mm:ss')});
+	res.send({success:true});
+});
+
+app.get('/system/reload',ensureAdmin, function(req, res){
 	live.sendreload();
 	res.send({success:true});
 });
 
-app.get('/system/ping', function(req, res){
+app.get('/system/ping', ensureAdmin, function(req, res){
 	console.log("sending out a ping to all connected devices!");
 	live.sendping();
 	res.send({success:true});
 });
 
 app.get('/system/pingresponse', function(req, res){
-	console.log("great -- seen ping response!");
-	live.sendresponse({id:"erith", ts:Date.now()});
+	var ts = new Date().getTime();
+	live.sendresponse({id:"erith", ts:moment(ts).format('MMM Do YY, h:mm:ss')});
 	res.send({success:true});
 });
 

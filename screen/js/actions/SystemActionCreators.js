@@ -8,4 +8,8 @@ module.exports = {
     respond_to_ping: function(){
       WebAPIUtils.respondToPing();
     },
+
+    reload: function(){
+      WebAPIUtils.reloadAck();
+    }
 };

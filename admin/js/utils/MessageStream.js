@@ -23,5 +23,9 @@ module.exports = {
          ServerActionCreators.receivedPingResponse(responder);
       });
 
+      socket.on("reloadack", function(reload){
+         ServerActionCreators.receivedReloadAck(reload);
+      });
+
     },
 };

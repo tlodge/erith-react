@@ -21,6 +21,7 @@ module.exports = {
 		RAW_TAGS: null,
 		RAW_MESSAGE: null,
 		PING_RESPONSE: null,
+		RELOAD_ACK: null,
   	}),
 
   	PayloadSources: keyMirror({
