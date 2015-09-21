@@ -10,7 +10,7 @@ module.exports = {
       
       socket.on("message", function(data){
           console.log("great!!! seen new message!!!");
-          console.log(data)
+          console.log(data);
       });
       
       socket.on("images", function(images){
@@ -19,6 +19,9 @@ module.exports = {
           ServerActionCreators.receivedImageList(images);
       });
 
-    },
+      socket.on("pingresponse", function(responder){
+         ServerActionCreators.receivedPingResponse(responder);
+      });
 
-}
+    },
+};

@@ -20,6 +20,7 @@ module.exports = {
 		REMOVE_TAG: null,
 		RAW_TAGS: null,
 		RAW_MESSAGE: null,
+		PING_RESPONSE: null,
   	}),
 
   	PayloadSources: keyMirror({

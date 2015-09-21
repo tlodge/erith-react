@@ -18,18 +18,19 @@ var _images = [];
 var ActionTypes = ErithConstants.ActionTypes;
 
 
-function _saveImage(image){
+var _saveImage = function(image){
 	var index = imageCount++%(MAX_IMAGES);
 	window.sessionStorage.setItem("selfie"+ index, image);
-}
+};
 
-function _setImageList(images){
+var _setImageList = function(images){
   _images = images;
-}
+};
 
-function _addImage(url){
+var _addImage = function(url){
   _images.push(url);
-}
+};
+
 var ImageStore = assign({}, EventEmitter.prototype, {
 
   getAll: function(){

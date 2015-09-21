@@ -61,6 +61,9 @@ module.exports = {
     	var sql = "SELECT * FROM messages ORDER BY ts DESC LIMIT 1";
     	return this.execute(sql).then(function(results){
     		return results.reduce(function(acc, obj){
+    			if (obj.ts){
+    				obj.ts = moment(obj.ts).format('MMM Do YY, h:mm');
+    			}
     			return obj;
     		},{message:"", ts:-1});
     	});

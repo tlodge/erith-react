@@ -206,7 +206,7 @@ app.get('/message/latest', function(req,res){
 		res.send(result);
 	}, function(error){
 		console.log(error);
-		res.send({message:"", ts:-1});
+		res.send({message:"", ts:"none"});
 	});
 });
 
@@ -225,6 +225,23 @@ app.post('/message/add', function(req, res){
 			ts: moment(ts).format('MMM Do YY, h:mm'), 
 		});
 	});
+});
+
+app.get('/system/reload', function(req, res){
+	live.sendreload();
+	res.send({success:true});
+});
+
+app.get('/system/ping', function(req, res){
+	console.log("sending out a ping to all connected devices!");
+	live.sendping();
+	res.send({success:true});
+});
+
+app.get('/system/pingresponse', function(req, res){
+	console.log("great -- seen ping response!");
+	live.sendresponse({id:"erith", ts:Date.now()});
+	res.send({success:true});
 });
 
 server.listen(8080);

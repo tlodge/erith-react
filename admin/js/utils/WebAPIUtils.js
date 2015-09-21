@@ -48,7 +48,7 @@ module.exports = {
 		    });
 
 	},
-	
+
 	deleteImage: function(image){
 		request
      		.post('/image/delete')
@@ -106,6 +106,32 @@ module.exports = {
 		       }
 		    });
 	},
+
+	reload: function(){
+		request
+     		.get('/system/reload')
+     		.set('Accept', 'application/json')
+     		.end(function(err, res){
+		       if (err){
+		         console.log(err);
+		       }else{
+		         console.log(res.body);
+		       }
+		    });
+	},
+
+	ping: function(){
+		request
+     		.get('/system/ping')
+     		.set('Accept', 'application/json')
+     		.end(function(err, res){
+		       if (err){
+		         console.log(err);
+		       }else{
+		         console.log(res.body);
+		       }
+		   });
+	}
 
 	
 

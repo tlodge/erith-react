@@ -1,5 +1,7 @@
 var io = require('socket.io-client');
 var ServerActionCreators = require('../actions/ServerActionCreators');
+var SystemActionCreators = require('../actions/SystemActionCreators');
+
 var socket;
 
 module.exports = {
@@ -20,6 +22,15 @@ module.exports = {
 	    ServerActionCreators.receivedTagList(data);
 	  });
 
+	  socket.on('reload', function (data) {
+	  	console.log("seen a reload");
+	  	location.reload(true);  
+	  });
+
+	  socket.on('ping', function (data) {
+	  	console.log("seen a ping!!!");
+	    SystemActionCreators.respond_to_ping();
+	  });
     },
 
 };

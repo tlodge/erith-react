@@ -4,6 +4,7 @@ var $ = require('jquery');
 var MainScreen = require('./components/MainScreen.react');
 var MessageScreen = require('./components/MessageScreen.react');
 var TagScreen = require('./components/TagScreen.react');
+var SystemScreen = require('./components/SystemScreen.react');
 var injectTapEventPlugin = require("react-tap-event-plugin");
 var MessageStream = require('./utils/MessageStream');
 var WebAPIUtils = require('./utils/WebAPIUtils');
@@ -57,6 +58,7 @@ var App = React.createClass({
 					<li><Link to="photos">photos</Link></li>
 					<li><Link to="messages">messages</Link></li>
 					<li><Link to="tags">tags</Link></li>
+					<li><Link to="system">system</Link></li>
 	            </ul>
 	          </div>
 	        </div>
@@ -73,6 +75,7 @@ var routes = (
 	<Route name="photos"    handler={MainScreen}/>
 	<Route name="messages"  handler={MessageScreen}/>
 	<Route name="tags"   	handler={TagScreen}/>
+	<Route name="system"   	handler={SystemScreen}/>
 	<DefaultRoute handler={MainScreen} />
   </Route>
 );

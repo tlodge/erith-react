@@ -20,5 +20,16 @@ module.exports = function(server){
     sendtags: function(tags){
       io.emit("tags", tags);
     },
+    sendping: function(){
+      
+      io.emit("ping", {});
+      console.log("emitted a ping!!");
+    },
+    sendreload: function(){
+      io.emit("reload", {});
+    },
+    sendresponse: function(response){
+      io.emit("pingresponse", response);
+    },
   };
 };

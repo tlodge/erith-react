@@ -61,5 +61,19 @@ module.exports = {
 		         ServerActionCreators.savedImageToServer(res.body.url);
 		        }
 		    });
+	},
+
+	respondToPing: function(){
+		console.log("calling system/pingresponse!!");
+		request
+     		.get('/system/pingresponse')
+     		.set('Accept', 'application/json')
+     		.end(function(err, res){
+		       if (err){
+		         console.log(err);
+		       }else{
+		        console.log(res.body);
+		       }
+		    });
 	}
 };

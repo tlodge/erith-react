@@ -40,5 +40,14 @@ module.exports = {
           type: ActionTypes.IMAGE_DELETED,
           image: image
       });
+    },
+
+    receivedPingResponse: function(response){
+       console.log("great - seen ping response!");
+       console.log(response);
+       AppDispatcher.handleServerAction({
+          type: ActionTypes.PING_RESPONSE,
+          response: response
+      });
     }
 };

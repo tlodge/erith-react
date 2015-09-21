@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Tom Lodge
  * All rights reserved.
  *
- * MessageStore
+ * PingStore
  */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher');
@@ -12,17 +12,18 @@ var assign = require('object-assign');
 
 var CHANGE_EVENT = 'change';
 
-var _message="";
+var _ping = {};
+
 var ActionTypes = ErithConstants.ActionTypes;
 
-var _updateMessage = function(message){
-	_message = message;
-}
+var _updatePing = function(ping){
+	_ping = ping;
+};
 
-var MessageStore = assign({}, EventEmitter.prototype, {
+var PingStore = assign({}, EventEmitter.prototype, {
 
-  message: function() {
-    return _message;
+  latest: function() {
+    return _ping || {};
   },
 
   emitChange: function() {
@@ -49,14 +50,11 @@ AppDispatcher.register(function(action) {
 
   switch(action.action.type) {
 
-		//case ActionTypes.NEW_MESSAGE:
-		//	  _updateMessage(action.action.message);
-		//		MessageStore.emitChange();
-		//		break;
     
-    case ActionTypes.RAW_MESSAGE:
-        _updateMessage(action.action.message);
-        MessageStore.emitChange();
+    case ActionTypes.PING_RESPONSE:
+        console.log("updating ping!!");
+        _updatePing(action.action.response);
+        PingStore.emitChange();
         break;
 
     default:
@@ -64,4 +62,4 @@ AppDispatcher.register(function(action) {
   }
 });
 
-module.exports = MessageStore;
+module.exports = PingStore;
